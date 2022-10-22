@@ -34,6 +34,7 @@ public partial class PaletteView : ContentView
     public void SetColors()
     {
         var subset = _colors.Take(Math.Min(_colors.Count, _settings.PaletteSize)).ToList();
+        subset.ForEach(x => _colors.Remove(x));
 
         for (int i = 0; i < subset.Count; i++)
         {
@@ -54,6 +55,9 @@ public partial class PaletteView : ContentView
     {
         var item = _gridView.Children.Single(x => x.Selected);
         _gridView.Remove(item);
+
+        if(_gridView.Count == 0)
+            SetColors();
     }
 
     private void Rect_Clicked(PaletteItemView paletteItem)
