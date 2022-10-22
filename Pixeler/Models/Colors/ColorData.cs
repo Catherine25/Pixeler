@@ -43,7 +43,7 @@ public sealed class ColorData : HslColor
         }
     }
 
-    private double MoveToNumber(double value, double needed, double step)
+    private static double MoveToNumber(double value, double needed, double step)
     {
         // copy value
         if (value == needed)

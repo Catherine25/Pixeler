@@ -35,7 +35,7 @@ public partial class MainPage : ContentPage
 		bitmap.Size = _settings.BitmapSize;
 
 		var paletteService = new PaletteService();
-		var palette = paletteService.Build(bitmap);
+		var palette = PaletteService.Build(bitmap);
 
 		var paletteView = new PaletteView(player, palette, _paletteSize);
 		_paletteView = paletteView;

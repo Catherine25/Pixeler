@@ -14,7 +14,7 @@ public partial class DrawAreaView : ContentView
     private Counter _counter;
     private ColorData _pendingColor;
     private readonly TypedGrid<PixelView> _typedGrid;
-    private IAudioPlayer _audioPlayer;
+    private readonly IAudioPlayer _audioPlayer;
 
     public DrawAreaView() => InitializeComponent();
 

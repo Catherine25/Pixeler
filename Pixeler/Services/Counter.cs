@@ -4,15 +4,15 @@ public class Counter
 {
     public event Action CountedToNull;
 
-    private int _value { get; set; }
+    private int Value { get; set; }
 
-    public void Increase() => _value++;
+    public void Increase() => Value++;
 
     public void Decrease()
     {
-        _value--;
+        Value--;
 
-        if (_value == 0)
+        if (Value == 0)
             CountedToNull();
     }
 }

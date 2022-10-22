@@ -5,7 +5,7 @@ namespace Pixeler.Services;
 
 public class PaletteService
 {
-    public HashSet<ColorData> Build(Bitmap bitmap)
+    public static HashSet<ColorData> Build(Bitmap bitmap)
     {
         var colorHashes = new HashSet<string>();
         var palette = new HashSet<ColorData>();
