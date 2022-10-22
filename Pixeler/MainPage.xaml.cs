@@ -1,4 +1,5 @@
-﻿using Pixeler.Services;
+﻿using Pixeler.Models;
+using Pixeler.Services;
 using Pixeler.Views;
 using Plugin.Maui.Audio;
 
@@ -6,18 +7,20 @@ namespace Pixeler;
 
 public partial class MainPage : ContentPage
 {
+	private readonly ISettings _settings;
 	private DrawAreaView _drawAreaView;
     private PaletteView _paletteView;
 	private IAudioManager _audioManager;
 
-	private readonly Size _bitmapSize = new Size(10, 10);
+	private readonly Size _bitmapSize = new(10, 10);
 	private const int _paletteSize = 10;
-	private const string _soundPath = "demo-2.wav";
 
-    public MainPage(IAudioManager audioManager)
+    public MainPage(IAudioManager audioManager,
+		ISettings settings)
 	{
 		InitializeComponent();
 
+		_settings = settings;
 		_audioManager = audioManager;
 
         Loaded += (o, e) => Load();
@@ -25,7 +28,7 @@ public partial class MainPage : ContentPage
 
 	private async void Load()
 	{
-		var player = _audioManager.CreatePlayer(await FileSystem.OpenAppPackageFileAsync(_soundPath));
+		var player = _audioManager.CreatePlayer(await FileSystem.OpenAppPackageFileAsync(_settings.SoundPath));
 
         var imageService = new ImageService();
 		var bitmap = await imageService.GetBitmapFromStorage();

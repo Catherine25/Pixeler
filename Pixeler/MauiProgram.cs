@@ -1,4 +1,5 @@
 ﻿using Plugin.Maui.Audio;
+using Pixeler.Models;
 
 namespace Pixeler;
 
@@ -16,6 +17,7 @@ public static class MauiProgram
 			});
 
 		builder.Services.AddSingleton(AudioManager.Current);
+		builder.Services.AddScoped<ISettings, Settings>();
 		builder.Services.AddTransient<MainPage>();
 
 		return builder.Build();
