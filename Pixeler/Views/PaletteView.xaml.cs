@@ -61,10 +61,7 @@ public partial class PaletteView : ContentView
         _player.Play();
 
         DeselectPreviouslySelected();
-
-        var paletteItemViews = _gridView.Children;
-        var paletteItemView = paletteItemViews.Single(x => x.Color == paletteItem.Color);
-        paletteItemView.Selected = true;
+        SelectPaletteItem(paletteItem);
 
         OnColorDataChosen(paletteItem.Color);
     }
@@ -75,5 +72,12 @@ public partial class PaletteView : ContentView
 
         if (selected != null)
             selected.Selected = false;
+    }
+
+    private void SelectPaletteItem(PaletteItemView paletteItem)
+    {
+        var paletteItemViews = _gridView.Children;
+        var paletteItemView = paletteItemViews.Single(x => x.Color == paletteItem.Color);
+        paletteItemView.Selected = true;
     }
 }
