@@ -15,7 +15,7 @@ public abstract class HslColor : RgbColor
         SetRgb((byte)r, (byte)g, (byte)b);
     }
 
-    public (double h, double s, double l) RgbToHls(int r, int g, int b)
+    public static (double h, double s, double l) RgbToHls(int r, int g, int b)
     {
         // Convert RGB to a 0.0 to 1.0 range.
         double double_r = r / 255.0;
@@ -64,7 +64,7 @@ public abstract class HslColor : RgbColor
             else
                 h = 4 + g_dist - r_dist;
 
-            h = h * 60;
+            h *= 60;
             if (h < 0)
                 h += 360;
         }

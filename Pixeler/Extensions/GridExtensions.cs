@@ -2,12 +2,12 @@
 
 public static class GridExtensions
 {
-	public static void SetColumns(this Grid grid, int count)
-	{
+    public static void SetColumns(this Grid grid, int count)
+    {
         grid.ColumnDefinitions.Clear();
-		for (int i = 0; i < count; i++)
-			grid.ColumnDefinitions.Add(new ColumnDefinition());
-	}
+        for (int i = 0; i < count; i++)
+            grid.ColumnDefinitions.Add(new ColumnDefinition());
+    }
 
     public static void SetRows(this Grid grid, int count)
     {

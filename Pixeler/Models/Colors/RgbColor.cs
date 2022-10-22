@@ -4,7 +4,7 @@ public abstract class RgbColor : Color
 {
     protected RgbColor(string hex) : base(hex) { }
 
-    public byte R => Convert.ToByte(Hex.Substring(0, 2), 16);
+    public byte R => Convert.ToByte(Hex[..2], 16);
     public byte G => Convert.ToByte(Hex.Substring(2, 2), 16);
     public byte B => Convert.ToByte(Hex.Substring(4, 2), 16);
 

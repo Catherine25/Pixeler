@@ -31,10 +31,10 @@ public partial class PaletteView : ContentView
     }
 
     public void SetColors()
-	{
+    {
         var subset = _colors.Take(Math.Min(_colors.Count, _count)).ToList();
 
-        for(int i = 0; i < subset.Count; i++)
+        for (int i = 0; i < subset.Count; i++)
         {
             ColorData item = subset[i];
 
@@ -47,7 +47,7 @@ public partial class PaletteView : ContentView
 
             _gridView.Add(rect, i, 0);
         }
-	}
+    }
 
     public void CompleteColor()
     {

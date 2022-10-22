@@ -1,5 +1,5 @@
-﻿using Plugin.Maui.Audio;
-using Pixeler.Models;
+﻿using Pixeler.Models;
+using Plugin.Maui.Audio;
 
 namespace Pixeler;
 
