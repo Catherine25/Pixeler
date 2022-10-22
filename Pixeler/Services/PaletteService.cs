@@ -3,7 +3,7 @@ using Pixeler.Models.Colors;
 
 namespace Pixeler.Services;
 
-public class PaletteService
+public static class PaletteService
 {
     public static HashSet<ColorData> Build(Bitmap bitmap)
     {

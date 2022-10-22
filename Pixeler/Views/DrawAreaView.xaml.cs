@@ -11,6 +11,7 @@ public partial class DrawAreaView : ContentView
     public Action ColorCompleted;
 
     private readonly Bitmap _bitmap;
+    private readonly ISettings _settings;
     private Counter _counter;
     private ColorData _pendingColor;
     private readonly TypedGrid<PixelView> _typedGrid;
@@ -18,10 +19,11 @@ public partial class DrawAreaView : ContentView
 
     public DrawAreaView() => InitializeComponent();
 
-    public DrawAreaView(Bitmap bitmap, IAudioPlayer audioPlayer)
+    public DrawAreaView(ISettings settings, Bitmap bitmap, IAudioPlayer audioPlayer)
     {
         InitializeComponent();
 
+        _settings = settings;
         _bitmap = bitmap;
         _audioPlayer = audioPlayer;
 
@@ -33,7 +35,7 @@ public partial class DrawAreaView : ContentView
         for (int x = 0; x < bitmap.Size.Width; x++)
             for (int y = 0; y < bitmap.Size.Height; y++)
             {
-                PixelView pixel = new();
+                PixelView pixel = new(_settings);
                 pixel.OnPixelClicked += OnPixelClicked;
                 _typedGrid.Add(pixel, x, y);
             }

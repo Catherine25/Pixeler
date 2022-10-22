@@ -1,3 +1,4 @@
+using Pixeler.Models;
 using Pixeler.Models.Colors;
 
 namespace Pixeler.Views;
@@ -5,6 +6,7 @@ namespace Pixeler.Views;
 public partial class PaletteItemView : ContentView
 {
     public event Action<PaletteItemView> Clicked;
+    private ISettings _settings;
 
     public ColorData Color
     {
@@ -23,15 +25,18 @@ public partial class PaletteItemView : ContentView
         set
         {
             _selected = value;
-            Body.BorderColor = _selected ? Colors.Red : Colors.Transparent;
+            Body.BorderColor = _selected ? _settings.AccentColor.MColor : Colors.Transparent;
         }
     }
     private bool _selected;
 
-    public PaletteItemView()
+    public PaletteItemView(ISettings settings)
     {
         InitializeComponent();
 
+        _settings = settings;
+
+        Body.BorderColor = Colors.Transparent;
         Body.Clicked += (o, e) => Clicked(this);
     }
 }

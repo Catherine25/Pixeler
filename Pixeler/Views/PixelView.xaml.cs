@@ -1,16 +1,20 @@
+using Pixeler.Models;
 using Pixeler.Models.Colors;
 
 namespace Pixeler.Views;
 
 public partial class PixelView : ContentView
 {
-    private static readonly ColorData _defaultColor = new(Colors.Transparent.ToHex());
+    private static readonly ColorData _defaultColor = new(null);
     private static readonly SolidColorBrush _defaultBrush = new(_defaultColor.MColor);
+    private ISettings _settings;
     public Action<PixelView> OnPixelClicked { get; set; }
 
-    public PixelView()
+    public PixelView(ISettings settings)
     {
         InitializeComponent();
+
+        _settings = settings;
 
         Body.Background = _defaultBrush;
 
@@ -48,7 +52,7 @@ public partial class PixelView : ContentView
         set
         {
             _active = value;
-            Body.BorderColor = _active ? Colors.Red : Colors.Transparent;
+            Body.BorderColor = _active ? _settings.AccentColor.MColor : _defaultColor.MColor;
         }
     }
     private bool _active;

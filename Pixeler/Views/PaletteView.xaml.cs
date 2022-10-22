@@ -1,4 +1,5 @@
 using Pixeler.ExtendedViews;
+using Pixeler.Models;
 using Pixeler.Models.Colors;
 using Plugin.Maui.Audio;
 
@@ -9,20 +10,20 @@ public partial class PaletteView : ContentView
     public event Action<ColorData> OnColorDataChosen;
     private readonly TypedGrid<PaletteItemView> _gridView;
     private readonly HashSet<ColorData> _colors;
-    private readonly int _count;
     private readonly IAudioPlayer _player;
+    private readonly ISettings _settings;
 
-    public PaletteView(IAudioPlayer player, HashSet<ColorData> colors, int count)
+    public PaletteView(ISettings settings, IAudioPlayer player, HashSet<ColorData> colors)
     {
         InitializeComponent();
 
         _colors = colors;
-        _count = count;
         _player = player;
+        _settings = settings;
 
         _gridView = new TypedGrid<PaletteItemView>
         {
-            Columns = count
+            Columns = _settings.PaletteSize
         };
 
         SetColors();
@@ -32,13 +33,13 @@ public partial class PaletteView : ContentView
 
     public void SetColors()
     {
-        var subset = _colors.Take(Math.Min(_colors.Count, _count)).ToList();
+        var subset = _colors.Take(Math.Min(_colors.Count, _settings.PaletteSize)).ToList();
 
         for (int i = 0; i < subset.Count; i++)
         {
             ColorData item = subset[i];
 
-            var rect = new PaletteItemView
+            var rect = new PaletteItemView(_settings)
             {
                 Color = item
             };
