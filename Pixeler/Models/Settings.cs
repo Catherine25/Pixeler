@@ -2,5 +2,6 @@ namespace Pixeler.Models;
 
 public class Settings : ISettings
 {
-    public string SoundPath { get => "demo-2.wav"; }
+    public Size BitmapSize => new(10, 10);
+    public string SoundPath => "demo-2.wav";
 }
