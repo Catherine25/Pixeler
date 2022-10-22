@@ -7,10 +7,10 @@ namespace Pixeler.Views;
 public partial class PaletteView : ContentView
 {
     public event Action<ColorData> OnColorDataChosen;
-    private TypedGrid<PaletteItemView> _gridView;
-    private HashSet<ColorData> _colors;
-    private int _count;
-    private IAudioPlayer _player;
+    private readonly TypedGrid<PaletteItemView> _gridView;
+    private readonly HashSet<ColorData> _colors;
+    private readonly int _count;
+    private readonly IAudioPlayer _player;
 
     public PaletteView(IAudioPlayer player, HashSet<ColorData> colors, int count)
     {
