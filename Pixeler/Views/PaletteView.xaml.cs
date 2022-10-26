@@ -1,7 +1,7 @@
 using Pixeler.ExtendedViews;
 using Pixeler.Models;
 using Pixeler.Models.Colors;
-using Plugin.Maui.Audio;
+using Pixeler.Services;
 
 namespace Pixeler.Views;
 
@@ -10,15 +10,15 @@ public partial class PaletteView : ContentView
     public event Action<ColorData> OnColorDataChosen;
     private readonly TypedGrid<PaletteItemView> _gridView;
     private readonly HashSet<ColorData> _colors;
-    private readonly IAudioPlayer _player;
+    private readonly IAudioService _audioService;
     private readonly ISettings _settings;
 
-    public PaletteView(ISettings settings, IAudioPlayer player, HashSet<ColorData> colors)
+    public PaletteView(ISettings settings, IAudioService audioService, HashSet<ColorData> colors)
     {
         InitializeComponent();
 
         _colors = colors;
-        _player = player;
+        _audioService = audioService;
         _settings = settings;
 
         _gridView = new TypedGrid<PaletteItemView>
@@ -62,7 +62,7 @@ public partial class PaletteView : ContentView
 
     private void Rect_Clicked(PaletteItemView paletteItem)
     {
-        _player.Play();
+        _audioService.Play();
 
         DeselectPreviouslySelected();
         SelectPaletteItem(paletteItem);

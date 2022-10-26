@@ -2,7 +2,6 @@ using Pixeler.ExtendedViews;
 using Pixeler.Models;
 using Pixeler.Models.Colors;
 using Pixeler.Services;
-using Plugin.Maui.Audio;
 
 namespace Pixeler.Views;
 
@@ -15,17 +14,17 @@ public partial class DrawAreaView : ContentView
     private Counter _counter;
     private ColorData _pendingColor;
     private readonly TypedGrid<PixelView> _typedGrid;
-    private readonly IAudioPlayer _audioPlayer;
+    private readonly IAudioService _audioService;
 
     public DrawAreaView() => InitializeComponent();
 
-    public DrawAreaView(ISettings settings, Bitmap bitmap, IAudioPlayer audioPlayer)
+    public DrawAreaView(ISettings settings, Bitmap bitmap, IAudioService audioService)
     {
         InitializeComponent();
 
         _settings = settings;
         _bitmap = bitmap;
-        _audioPlayer = audioPlayer;
+        _audioService = audioService;
 
         _typedGrid = new TypedGrid<PixelView>
         {
@@ -70,7 +69,7 @@ public partial class DrawAreaView : ContentView
 
     private void OnPixelClicked(PixelView pixel)
     {
-        _audioPlayer.Play();
+        _audioService.Play();
 
         pixel.Color = _pendingColor;
 
