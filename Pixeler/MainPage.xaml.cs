@@ -6,38 +6,37 @@ namespace Pixeler;
 
 public partial class MainPage : ContentPage
 {
+	private readonly DrawAreaView _drawAreaView;
+	private readonly PaletteView _paletteView;
 	private readonly ISettings _settings;
-	private readonly IAudioService _audioService;
-	private DrawAreaView _drawAreaView;
-	private PaletteView _paletteView;
 
-    public MainPage(ISettings settings, IAudioService audioService)
+    public MainPage(
+        DrawAreaView drawAreaView,
+		PaletteView paletteView,
+		ISettings settings)
 	{
 		InitializeComponent();
 
+        _drawAreaView = drawAreaView;
 		_settings = settings;
-        _audioService = audioService;
+		_paletteView = paletteView;
 
-		Loaded += (o, e) => Load();
+        _drawAreaView.ColorCompleted += _paletteView.CompleteColor;
+        _paletteView.OnColorDataChosen += _drawAreaView.SetPixelsToColor;
+
+		Body.Add(_drawAreaView, 0, 0);
+		Body.Add(_paletteView, 0, 1);
+
+        Loaded += (o, e) => Load();
 	}
 
 	private async void Load()
 	{
 		var bitmap = await ImageService.GetBitmapFromStorage();
 		bitmap.Size = _settings.BitmapSize;
+		_drawAreaView.SetBitmap(bitmap);
 
 		var palette = PaletteService.Build(bitmap);
-
-		PaletteView paletteView = new(_settings, _audioService, palette);
-		_paletteView = paletteView;
-		Body.Add(paletteView, 0, 1);
-
-        DrawAreaView grid = new(_settings, bitmap, _audioService);
-		_drawAreaView = grid;
-		_drawAreaView.ColorCompleted += _paletteView.CompleteColor;
-		Body.Add(grid, 0, 0);
-
-		paletteView.OnColorDataChosen += _drawAreaView.SetPixelsToColor;
+		_paletteView.Colors = palette;
 	}
 }
-

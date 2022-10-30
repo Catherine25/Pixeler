@@ -8,16 +8,27 @@ namespace Pixeler.Views;
 public partial class PaletteView : ContentView
 {
     public event Action<ColorData> OnColorDataChosen;
+
     private readonly TypedGrid<PaletteItemView> _gridView;
-    private readonly HashSet<ColorData> _colors;
     private readonly IAudioService _audioService;
     private readonly ISettings _settings;
 
-    public PaletteView(ISettings settings, IAudioService audioService, HashSet<ColorData> colors)
+    public HashSet<ColorData> Colors
+    {
+        set
+        {
+            _colors = value;
+            SetColors();
+        }
+    }
+    private HashSet<ColorData> _colors;
+
+    public PaletteView(
+        ISettings settings,
+        IAudioService audioService)
     {
         InitializeComponent();
 
-        _colors = colors;
         _audioService = audioService;
         _settings = settings;
 
@@ -26,14 +37,13 @@ public partial class PaletteView : ContentView
             Columns = _settings.PaletteSize
         };
 
-        SetColors();
-
         Content = _gridView.Grid;
     }
 
     public void SetColors()
     {
-        var subset = _colors.Take(Math.Min(_colors.Count, _settings.PaletteSize)).ToList();
+        int paletteCount = Math.Min(_colors.Count, _settings.PaletteSize);
+        var subset = _colors.Take(paletteCount).ToList();
         subset.ForEach(x => _colors.Remove(x));
 
         for (int i = 0; i < subset.Count; i++)
