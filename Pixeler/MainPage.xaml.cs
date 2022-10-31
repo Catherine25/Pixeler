@@ -1,4 +1,5 @@
-﻿using Pixeler.Models;
+﻿using Pixeler.Extensions;
+using Pixeler.Models;
 using Pixeler.Services;
 using Pixeler.Views;
 
@@ -7,36 +8,35 @@ namespace Pixeler;
 public partial class MainPage : ContentPage
 {
 	private readonly DrawAreaView _drawAreaView;
-	private readonly PaletteView _paletteView;
-	private readonly ISettings _settings;
+	private readonly ImageConfigurationView _imageConfigurationView;
+    private readonly PaletteView _paletteView;
 
     public MainPage(
         DrawAreaView drawAreaView,
-		PaletteView paletteView,
-		ISettings settings)
+		ImageConfigurationView imageConfigurationView,
+		PaletteView paletteView)
 	{
 		InitializeComponent();
 
         _drawAreaView = drawAreaView;
-		_settings = settings;
-		_paletteView = paletteView;
+		_imageConfigurationView = imageConfigurationView;
+		_imageConfigurationView.BitmapSelected += BitmapSelected;
+
+        _paletteView = paletteView;
 
         _drawAreaView.ColorCompleted += _paletteView.CompleteColor;
         _paletteView.OnColorDataChosen += _drawAreaView.SetPixelsToColor;
 
-		Body.Add(_drawAreaView, 0, 0);
+		Body.Add(_imageConfigurationView, 0, 0);
 		Body.Add(_paletteView, 0, 1);
-
-        Loaded += (o, e) => Load();
 	}
 
-	private async void Load()
+	private void BitmapSelected(Bitmap bitmap)
 	{
-		var bitmap = await ImageService.GetBitmapFromStorage();
-		bitmap.Size = _settings.BitmapSize;
-		_drawAreaView.SetBitmap(bitmap);
+		Body.ReplaceChild(_imageConfigurationView, _drawAreaView);
+        _drawAreaView.SetBitmap(bitmap);
 
 		var palette = PaletteService.Build(bitmap);
 		_paletteView.Colors = palette;
-	}
+    }
 }

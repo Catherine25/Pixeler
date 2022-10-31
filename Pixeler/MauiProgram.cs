@@ -23,7 +23,8 @@ public static class MauiProgram
 		builder.Services.AddScoped<IAudioService, AudioService>();
 
 		builder.Services.AddTransient<DrawAreaView>();
-		builder.Services.AddTransient<PaletteView>();
+		builder.Services.AddTransient<ImageConfigurationView>();
+        builder.Services.AddTransient<PaletteView>();
 		builder.Services.AddTransient<MainPage>();
 
 		return builder.Build();
