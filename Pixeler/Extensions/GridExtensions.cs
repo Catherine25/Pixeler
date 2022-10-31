@@ -18,4 +18,15 @@ public static class GridExtensions
 
     public static IList<T> ChildrenAs<T>(this Grid grid) =>
         grid.Children.Select(x => (T)x).ToList();
+
+    public static void ReplaceChild(this Grid grid, View oldView, View newView)
+    {
+        var locationConfiguration = oldView.GetGridPosition();
+
+        grid.Remove(oldView);
+
+        newView.SetGridPosition(locationConfiguration);
+
+        grid.Add(newView);
+    }
 }
