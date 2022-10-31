@@ -3,9 +3,14 @@ using SkiaSharp;
 
 namespace Pixeler.Services;
 
-public static class ImageService
+public interface IImageService
 {
-    public static async Task<Bitmap> GetBitmapFromStorage()
+    public Task<Bitmap> GetBitmapFromStorage();
+}
+
+public class ImageService : IImageService
+{
+    public async Task<Bitmap> GetBitmapFromStorage()
     {
         var file = await SelectFile();
 
@@ -35,6 +40,7 @@ public static class ImageService
         }
         catch (Exception)
         {
+            // todo
         }
 
         return null;
