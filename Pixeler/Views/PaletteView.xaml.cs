@@ -66,7 +66,7 @@ public partial class PaletteView : ContentView
         var item = _gridView.Children.Single(x => x.Selected);
         _gridView.Remove(item);
 
-        if(_gridView.Count == 0)
+        if (_gridView.Count == 0)
             SetColors();
     }
 
