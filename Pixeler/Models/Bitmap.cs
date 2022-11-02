@@ -13,8 +13,8 @@ public class Bitmap
         get => _size;
         set
         {
-            _size.Width = Math.Min(_size.Width, value.Width);
-            _size.Height = Math.Min(_size.Height, value.Height);
+            _size.Width = Math.Min(_bitmap.Width, value.Width);
+            _size.Height = Math.Min(_bitmap.Height, value.Height);
         }
     }
 
