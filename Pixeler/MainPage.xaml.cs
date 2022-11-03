@@ -20,11 +20,10 @@ public partial class MainPage : ContentPage
 
         _drawAreaView = drawAreaView;
 		_imageConfigurationView = imageConfigurationView;
-		_imageConfigurationView.BitmapSelected += BitmapSelected;
-
         _paletteView = paletteView;
 
         _drawAreaView.ColorCompleted += _paletteView.CompleteColor;
+		_imageConfigurationView.BitmapSelected += BitmapSelected;
         _paletteView.OnColorDataChosen += _drawAreaView.SetPixelsToColor;
 
 		Body.Add(_imageConfigurationView, 0, 0);
