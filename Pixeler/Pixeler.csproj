@@ -80,6 +80,9 @@
 	  <MauiXaml Update="PixelView.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
+	  <MauiXaml Update="Views\ImageAreaSelectionView.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
 	  <MauiXaml Update="Views\ImageConfigurationView.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>

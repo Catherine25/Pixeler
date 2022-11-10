@@ -7,18 +7,21 @@ namespace Pixeler;
 
 public partial class MainPage : ContentPage
 {
+	private readonly ImageAreaSelectionView _imageAreaSelectionView;
 	private readonly DrawAreaView _drawAreaView;
 	private readonly ImageConfigurationView _imageConfigurationView;
     private readonly PaletteView _paletteView;
 
     public MainPage(
+		ImageAreaSelectionView imageAreaSelectionView,
         DrawAreaView drawAreaView,
 		ImageConfigurationView imageConfigurationView,
 		PaletteView paletteView)
 	{
 		InitializeComponent();
 
-        _drawAreaView = drawAreaView;
+		_drawAreaView = drawAreaView;
+		_imageAreaSelectionView = imageAreaSelectionView;
 		_imageConfigurationView = imageConfigurationView;
         _paletteView = paletteView;
 
@@ -32,10 +35,12 @@ public partial class MainPage : ContentPage
 
 	private void BitmapSelected(Bitmap bitmap)
 	{
-		Body.ReplaceChild(_imageConfigurationView, _drawAreaView);
-        _drawAreaView.SetBitmap(bitmap);
+		Body.ReplaceChild(_imageConfigurationView, _imageAreaSelectionView);
 
-		var palette = PaletteService.Build(bitmap);
-		_paletteView.Colors = palette;
+		//Body.ReplaceChild(_imageConfigurationView, _drawAreaView);
+		//_drawAreaView.SetBitmap(bitmap);
+
+		//var palette = PaletteService.Build(bitmap);
+		//_paletteView.Colors = palette;
     }
 }

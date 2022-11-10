@@ -9,7 +9,7 @@ public partial class DrawAreaView : ContentView
 {
     public Action ColorCompleted;
 
-    private Bitmap _bitmap;
+    private LevelBitmap _bitmap;
     private readonly ISettings _settings;
     private Counter _counter;
     private ColorData _pendingColor;
@@ -30,7 +30,7 @@ public partial class DrawAreaView : ContentView
         Content = _typedGrid.Grid;
     }
 
-    public void SetBitmap(Bitmap bitmap)
+    public void SetBitmap(LevelBitmap bitmap)
     {
         _bitmap = bitmap;
 

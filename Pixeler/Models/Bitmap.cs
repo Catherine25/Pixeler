@@ -1,4 +1,5 @@
-﻿using Pixeler.Models.Colors;
+﻿using Pixeler.Extensions;
+using Pixeler.Models.Colors;
 using SkiaSharp;
 
 namespace Pixeler.Models;
@@ -6,31 +7,33 @@ namespace Pixeler.Models;
 public class Bitmap
 {
     private readonly SKBitmap _bitmap;
-    private Size _size;
+    private Rect _rect;
 
-    public Size Size
+    protected Rect Rect
     {
-        get => _size;
+        get => _rect;
         set
         {
-            _size.Width = Math.Min(_bitmap.Width, value.Width);
-            _size.Height = Math.Min(_bitmap.Height, value.Height);
+            _rect.X = value.X;
+            _rect.Y = value.Y;
+            _rect.Width = Math.Min(_bitmap.Width, value.Width);
+            _rect.Height = Math.Min(_bitmap.Height, value.Height);
         }
     }
 
     public Bitmap(SKBitmap bitmap)
     {
         _bitmap = bitmap;
-        _size = new Size(bitmap.Width, bitmap.Height);
+        _rect = new Rect(new Point(0,0), bitmap.GetSize());
     }
 
-    public ColorData GetPixel(Point point) => GetPixel((int)point.X, (int)point.Y);
-    public ColorData GetPixel(int x, int y)
+    protected ColorData GetPixel(Point point) => GetPixel((int)point.X, (int)point.Y);
+    protected ColorData GetPixel(int x, int y)
     {
-        if (x < 0 || x > Size.Width)
+        if (x < 0 || x > _rect.Width)
             throw new ArgumentOutOfRangeException(nameof(x));
 
-        if (y < 0 || y > Size.Height)
+        if (y < 0 || y > _rect.Height)
             throw new ArgumentOutOfRangeException(nameof(y));
 
         return new ColorData(_bitmap.GetPixel(x, y).ToString());

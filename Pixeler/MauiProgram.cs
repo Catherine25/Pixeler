@@ -25,6 +25,7 @@ public static class MauiProgram
 
 		builder.Services.AddTransient<DrawAreaView>();
 		builder.Services.AddTransient<ImageConfigurationView>();
+		builder.Services.AddTransient<ImageAreaSelectionView>();
         builder.Services.AddTransient<PaletteView>();
 		builder.Services.AddTransient<MainPage>();
 
