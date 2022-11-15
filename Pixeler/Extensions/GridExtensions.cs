@@ -29,4 +29,7 @@ public static class GridExtensions
 
         grid.Add(newView);
     }
+
+    public static void Add(this Grid grid, View view, Point point) =>
+        grid.Add(view, (int)point.X, (int)point.Y);
 }
