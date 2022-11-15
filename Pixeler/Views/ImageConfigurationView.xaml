@@ -19,6 +19,7 @@
         <Button x:Name="SelectButton"
                 Text="Select"
                 Grid.Row="1" />
+
         <Label x:Name="ImageResolutionLabel"
                Text="Image resolution"
                HorizontalTextAlignment="Center"
@@ -29,6 +30,7 @@
                HorizontalTextAlignment="Center"
                VerticalTextAlignment="Center"
                Grid.Row="3"/>
+
         <Button x:Name="StartButton"
                 Text="Start"
                 IsVisible="False"
