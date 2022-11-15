@@ -11,6 +11,9 @@ public partial class MainPage : ContentPage
 	private readonly ImageConfigurationView _imageConfigurationView;
     private readonly PaletteView _paletteView;
 
+	private readonly Point _imageConfigurationViewLocation = new(0, 0);
+	private readonly Point _paletteViewLocation = new(0, 1);
+
     public MainPage(
         DrawAreaView drawAreaView,
 		ImageConfigurationView imageConfigurationView,
@@ -26,8 +29,8 @@ public partial class MainPage : ContentPage
 		_imageConfigurationView.BitmapSelected += BitmapSelected;
         _paletteView.OnColorDataChosen += _drawAreaView.SetPixelsToColor;
 
-		Body.Add(_imageConfigurationView, 0, 0);
-		Body.Add(_paletteView, 0, 1);
+		Body.Add(_imageConfigurationView, _imageConfigurationViewLocation);
+		Body.Add(_paletteView, _paletteViewLocation);
 	}
 
 	private void BitmapSelected(Bitmap bitmap)
