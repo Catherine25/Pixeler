@@ -6,8 +6,8 @@ namespace Pixeler.Models;
 public class Bitmap
 {
     private readonly SKBitmap _bitmap;
-    private Size _size;
 
+    private Size _size;
     public Size Size
     {
         get => _size;
@@ -17,6 +17,8 @@ public class Bitmap
             _size.Height = Math.Min(_bitmap.Height, value.Height);
         }
     }
+
+    public int SquaredResolution => (int)Math.Min(Size.Width, Size.Height);
 
     public Bitmap(SKBitmap bitmap)
     {
