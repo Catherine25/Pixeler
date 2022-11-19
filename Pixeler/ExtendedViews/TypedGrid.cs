@@ -2,7 +2,8 @@
 
 namespace Pixeler.ExtendedViews;
 
-public sealed class TypedGrid<T> where T : IView
+public class TypedGrid<T>
+    where T : IView
 {
     public Grid Grid { get; }
 
@@ -22,8 +23,18 @@ public sealed class TypedGrid<T> where T : IView
             Rows = (int)value.Height;
         }
     }
-    public int Columns { set => Grid.SetColumns(value); }
-    public int Rows { set => Grid.SetRows(value); }
+
+    public int Columns
+    {
+        get => Grid.GetColumns();
+        set => Grid.SetColumns(value);
+    }
+
+    public int Rows
+    {
+        get => Grid.GetRows();
+        set => Grid.SetRows(value);
+    }
 
     public IList<T> Children => Grid.ChildrenAs<T>();
     public int Count => Grid.Count;
