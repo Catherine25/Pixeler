@@ -2,18 +2,36 @@
 
 public static class GridExtensions
 {
+    public static int GetColumns(this Grid grid) => grid.ColumnDefinitions.Count;
     public static void SetColumns(this Grid grid, int count)
     {
-        grid.ColumnDefinitions.Clear();
-        for (int i = 0; i < count; i++)
-            grid.ColumnDefinitions.Add(new ColumnDefinition());
+        int current = grid.GetColumns();
+        int difference = count - current;
+
+        if (difference == 0)
+            return;
+
+        for (int i = 0; i < difference; i++)
+            if(difference > 0)
+                grid.ColumnDefinitions.Add(new ColumnDefinition());
+            else
+                grid.ColumnDefinitions.RemoveAt(grid.ColumnDefinitions.Count - 1);
     }
 
+    public static int GetRows(this Grid grid) => grid.RowDefinitions.Count;
     public static void SetRows(this Grid grid, int count)
     {
-        grid.RowDefinitions.Clear();
-        for (int i = 0; i < count; i++)
-            grid.RowDefinitions.Add(new RowDefinition());
+        int current = grid.GetRows();
+        int difference = count - current;
+
+        if (difference == 0)
+            return;
+
+        for (int i = 0; i < difference; i++)
+            if (difference > 0)
+                grid.RowDefinitions.Add(new RowDefinition());
+            else
+                grid.RowDefinitions.RemoveAt(grid.RowDefinitions.Count - 1);
     }
 
     public static IList<T> ChildrenAs<T>(this Grid grid) =>
