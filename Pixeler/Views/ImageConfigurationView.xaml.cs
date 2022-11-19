@@ -10,17 +10,20 @@ public partial class ImageConfigurationView : ContentView
 	private readonly IAudioService _audioService;
     private readonly IImageService _imageService;
 	private readonly LevelSelectionView _levelSelectionView;
-	private Bitmap _bitmap;
+	private readonly ModeSelectionView _modeSelectionView;
+    private Bitmap _bitmap;
 
     public ImageConfigurationView(IAudioService audioService,
 		IImageService imageService,
-		LevelSelectionView levelSelectionView)
+        LevelSelectionView levelSelectionView,
+        ModeSelectionView modeSelectionView)
 	{
 		InitializeComponent();
 
 		_audioService = audioService;
         _imageService = imageService;
         _levelSelectionView = levelSelectionView;
+        _modeSelectionView = modeSelectionView;
 
 		_levelSelectionView.LevelSelected += LevelSelectionView_LevelSelected;
         SelectButton.Clicked += SelectButton_Clicked;
@@ -28,7 +31,7 @@ public partial class ImageConfigurationView : ContentView
 
 	private void LevelSelectionView_LevelSelected(int levelResolution)
 	{
-        _bitmap.Size = new Size(levelResolution);
+        _bitmap.Size = new(levelResolution);
 
         StartButton.IsEnabled = true;
         StartButton.Clicked += StartButton_Clicked;
@@ -45,6 +48,8 @@ public partial class ImageConfigurationView : ContentView
 
 		_levelSelectionView.GenerateLevels(_bitmap.SquaredResolution);
         Body.Add(_levelSelectionView, 0, 4);
+
+        Body.Add(_modeSelectionView, 0, 5);
 
         StartButton.IsVisible = true;
     }
