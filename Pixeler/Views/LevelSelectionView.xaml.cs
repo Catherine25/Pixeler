@@ -28,7 +28,7 @@ public partial class LevelSelectionView : ContentView
 
 		while (currentSize < squaredResolution)
         {
-            ToggleButton button = new()
+            ToggleButton button = new(false)
             {
                 Text = currentSize.ToString()
             };
