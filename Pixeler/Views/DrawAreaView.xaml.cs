@@ -9,7 +9,7 @@ public partial class DrawAreaView : ContentView
 {
     public Action ColorCompleted;
 
-    private Bitmap _bitmap;
+    private ColoringConfiguration _coloringConfiguration;
     private readonly ISettings _settings;
     private Counter _counter;
     private ColorData _pendingColor;
@@ -30,14 +30,14 @@ public partial class DrawAreaView : ContentView
         Content = _typedGrid.Grid;
     }
 
-    public void SetBitmap(Bitmap bitmap)
+    public void SetConfiguration(ColoringConfiguration coloringConfiguration)
     {
-        _bitmap = bitmap;
+        _coloringConfiguration = coloringConfiguration;
 
-        _typedGrid.Size = bitmap.Size;
+        _typedGrid.Size = new Size((double)coloringConfiguration.GridResolution);
 
-        for (int x = 0; x < bitmap.Size.Width; x++)
-            for (int y = 0; y < bitmap.Size.Height; y++)
+        for (int x = 0; x < coloringConfiguration.GridResolution; x++)
+            for (int y = 0; y < coloringConfiguration.GridResolution; y++)
             {
                 PixelView pixel = new(_settings);
                 pixel.OnPixelClicked += OnPixelClicked;
@@ -57,10 +57,10 @@ public partial class DrawAreaView : ContentView
             var pixel = _typedGrid[i];
             var old = pixel.Color;
 
-            if (old == _bitmap.GetPixel(pixel.Location))
+            if (old == _coloringConfiguration.Bitmap.GetPixel(pixel.Location))
                 continue;
 
-            if (color == _bitmap.GetPixel(pixel.Location))
+            if (color == _coloringConfiguration.Bitmap.GetPixel(pixel.Location))
             {
                 pixel.Active = true;
                 _counter.Increase();
