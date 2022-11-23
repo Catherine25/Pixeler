@@ -1,23 +1,47 @@
 ﻿using Pixeler.Models;
 using Pixeler.Models.Colors;
+using Pixeler.Views;
 
 namespace Pixeler.Services;
 
 public static class PaletteService
 {
-    public static HashSet<ColorData> Build(Bitmap bitmap)
+    public static IEnumerable<ColorData> BuildForMode(ColoringConfiguration coloringConfiguration)
     {
-        var colorHashes = new HashSet<string>();
+        if (coloringConfiguration.Mode == Modes.Direct)
+            return BuildForDirectMode(coloringConfiguration);
+
+        if (coloringConfiguration.Mode == Modes.LayeredBigToSmall_Acryllic)
+            return BuildForLayeredBigToSmallAcryllicMode(coloringConfiguration);
+
+        throw new NotSupportedException();
+    }
+
+    public static IEnumerable<ColorData> BuildForDirectMode(ColoringConfiguration coloringConfiguration)
+    {
         var palette = new HashSet<ColorData>();
 
-        for (int x = 0; x < bitmap.Size.Width; x++)
-            for (int y = 0; y < bitmap.Size.Height; y++)
+        for (int x = 0; x < coloringConfiguration.GridResolution; x++)
+            for (int y = 0; y < coloringConfiguration.GridResolution; y++)
             {
-                var pixel = bitmap.GetPixel(x, y);
-                if (colorHashes.Add(pixel.Hex))
-                    palette.Add(pixel);
+                var pixel = coloringConfiguration.Bitmap.GetPixel(x, y);
+                palette.Add(pixel);
             }
 
         return palette;
+    }
+
+    public static IEnumerable<ColorData> BuildForLayeredBigToSmallAcryllicMode(ColoringConfiguration coloringConfiguration)
+    {
+        var palette = new HashSet<ColorData>();
+
+        for (int x = 0; x < coloringConfiguration.GridResolution; x++)
+            for (int y = 0; y < coloringConfiguration.GridResolution; y++)
+            {
+                var pixel = coloringConfiguration.Bitmap.GetPixel(x, y);
+                palette.Add(pixel);
+            }
+
+        return palette.OrderByDescending(x => x.L);
     }
 }
