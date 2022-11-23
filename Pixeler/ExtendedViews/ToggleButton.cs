@@ -21,5 +21,18 @@ public class ToggleButton : Button
     }
     private bool _enabled;
 
-    public ToggleButton() => Enabled = true;
+    public bool ToggleOnClick;
+
+    public ToggleButton(bool toggleOnClick = true)
+    {
+        Enabled = true;
+        ToggleOnClick = toggleOnClick;
+        Clicked += ToggleButton_Clicked;
+    }
+
+    private void ToggleButton_Clicked(object sender, EventArgs e)
+    {
+        if(ToggleOnClick)
+            Enabled = !Enabled;
+    }
 }
