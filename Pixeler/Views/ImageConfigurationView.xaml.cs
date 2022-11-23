@@ -38,6 +38,7 @@ public partial class ImageConfigurationView : ContentView
     private void _modeSelectionView_SelectedModeChanged(Modes mode)
     {
         _coloringConfiguration.Mode = mode;
+        _coloringConfiguration.ColoringFunc = ColoringFuncService.GetForMode(mode);
         TryEnableStartButton();
     }
 

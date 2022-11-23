@@ -39,7 +39,6 @@ public partial class MainPage : ContentPage
         _drawAreaView.SetConfiguration(coloringConfiguration);
 
 		var palette = PaletteService.BuildForMode(coloringConfiguration);
-		var coloringFunc = ColoringFuncService.GetForMode(coloringConfiguration.Mode.Value);
 		_paletteView.Colors = palette;
     }
 }
