@@ -1,3 +1,4 @@
+using Pixeler.Extensions;
 using Pixeler.Models;
 using Pixeler.Services;
 
@@ -26,6 +27,10 @@ public partial class ImageConfigurationView : ContentView
         _modeSelectionView = modeSelectionView;
 
 		_levelSelectionView.LevelSelected += LevelSelectionView_LevelSelected;
+
+        StartButton.SetClickSound(audioService);
+
+        SelectButton.SetClickSound(audioService);
         SelectButton.Clicked += SelectButton_Clicked;
     }
 
@@ -39,8 +44,6 @@ public partial class ImageConfigurationView : ContentView
 
     private async void SelectButton_Clicked(object sender, EventArgs e)
 	{
-		_audioService.Play();
-
         _bitmap = await _imageService.GetBitmapFromStorage();
 
 		ImageResolutionLabel.IsVisible = true;
@@ -56,7 +59,6 @@ public partial class ImageConfigurationView : ContentView
 
 	private void StartButton_Clicked(object sender, EventArgs e)
 	{
-		_audioService.Play();
 		BitmapSelected(_bitmap);
     }
 }
