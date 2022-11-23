@@ -13,7 +13,7 @@ public partial class PaletteView : ContentView
     private readonly IAudioService _audioService;
     private readonly ISettings _settings;
 
-    public HashSet<ColorData> Colors
+    public IEnumerable<ColorData> Colors
     {
         set
         {
@@ -21,7 +21,7 @@ public partial class PaletteView : ContentView
             SetColors();
         }
     }
-    private HashSet<ColorData> _colors;
+    private IEnumerable<ColorData> _colors;
 
     public PaletteView(
         ISettings settings,
@@ -42,9 +42,9 @@ public partial class PaletteView : ContentView
 
     public void SetColors()
     {
-        int paletteCount = Math.Min(_colors.Count, _settings.PaletteSize);
+        int paletteCount = Math.Min(_colors.Count(), _settings.PaletteSize);
         var subset = _colors.Take(paletteCount).ToList();
-        subset.ForEach(x => _colors.Remove(x));
+        _colors = _colors.Except(subset);
 
         for (int i = 0; i < subset.Count; i++)
         {
