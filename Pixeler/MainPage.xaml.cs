@@ -36,9 +36,10 @@ public partial class MainPage : ContentPage
 	private void ColoringConfigurationCompleted(ColoringConfiguration coloringConfiguration)
 	{
 		Body.ReplaceChild(_imageConfigurationView, _drawAreaView);
-        _drawAreaView.SetBitmap(coloringConfiguration.Bitmap);
+        _drawAreaView.SetConfiguration(coloringConfiguration);
 
-		var palette = PaletteService.Build(coloringConfiguration.Bitmap);
+		var palette = PaletteService.BuildForMode(coloringConfiguration);
+		var coloringFunc = ColoringFuncService.GetForMode(coloringConfiguration.Mode.Value);
 		_paletteView.Colors = palette;
     }
 }
