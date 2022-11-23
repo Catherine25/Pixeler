@@ -6,9 +6,8 @@ namespace Pixeler.Views;
 
 public partial class ImageConfigurationView : ContentView
 {
-	public Action<Bitmap> BitmapSelected;
+	public Action<ColoringConfiguration> ColoringConfigurationCompleted;
 
-	private readonly IAudioService _audioService;
     private readonly IImageService _imageService;
 	private readonly LevelSelectionView _levelSelectionView;
 	private readonly ModeSelectionView _modeSelectionView;
@@ -21,7 +20,6 @@ public partial class ImageConfigurationView : ContentView
 	{
 		InitializeComponent();
 
-		_audioService = audioService;
         _imageService = imageService;
         _levelSelectionView = levelSelectionView;
         _modeSelectionView = modeSelectionView;
@@ -75,6 +73,6 @@ public partial class ImageConfigurationView : ContentView
 
 	private void StartButton_Clicked(object sender, EventArgs e)
 	{
-		BitmapSelected(_coloringConfiguration.Bitmap);
+		ColoringConfigurationCompleted(_coloringConfiguration);
     }
 }

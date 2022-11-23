@@ -26,19 +26,19 @@ public partial class MainPage : ContentPage
         _paletteView = paletteView;
 
         _drawAreaView.ColorCompleted += _paletteView.CompleteColor;
-		_imageConfigurationView.BitmapSelected += BitmapSelected;
+		_imageConfigurationView.ColoringConfigurationCompleted += ColoringConfigurationCompleted;
         _paletteView.OnColorDataChosen += _drawAreaView.SetPixelsToColor;
 
 		Body.Add(_imageConfigurationView, _imageConfigurationViewLocation);
 		Body.Add(_paletteView, _paletteViewLocation);
 	}
 
-	private void BitmapSelected(Bitmap bitmap)
+	private void ColoringConfigurationCompleted(ColoringConfiguration coloringConfiguration)
 	{
 		Body.ReplaceChild(_imageConfigurationView, _drawAreaView);
-        _drawAreaView.SetBitmap(bitmap);
+        _drawAreaView.SetBitmap(coloringConfiguration.Bitmap);
 
-		var palette = PaletteService.Build(bitmap);
+		var palette = PaletteService.Build(coloringConfiguration.Bitmap);
 		_paletteView.Colors = palette;
     }
 }
