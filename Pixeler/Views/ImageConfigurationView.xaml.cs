@@ -12,7 +12,7 @@ public partial class ImageConfigurationView : ContentView
     private readonly IImageService _imageService;
 	private readonly LevelSelectionView _levelSelectionView;
 	private readonly ModeSelectionView _modeSelectionView;
-    private Bitmap _bitmap;
+    private ColoringConfiguration _coloringConfiguration;
 
     public ImageConfigurationView(IAudioService audioService,
 		IImageService imageService,
@@ -25,31 +25,47 @@ public partial class ImageConfigurationView : ContentView
         _imageService = imageService;
         _levelSelectionView = levelSelectionView;
         _modeSelectionView = modeSelectionView;
+        _coloringConfiguration = new ColoringConfiguration();
 
-		_levelSelectionView.LevelSelected += LevelSelectionView_LevelSelected;
-
-        StartButton.SetClickSound(audioService);
+        _levelSelectionView.LevelSelected += LevelSelectionView_LevelSelected;
+        _modeSelectionView.SelectedModeChanged += _modeSelectionView_SelectedModeChanged;
 
         SelectButton.SetClickSound(audioService);
         SelectButton.Clicked += SelectButton_Clicked;
+
+        StartButton.SetClickSound(audioService);
+        StartButton.Clicked += StartButton_Clicked;
     }
 
-	private void LevelSelectionView_LevelSelected(int levelResolution)
+    private void _modeSelectionView_SelectedModeChanged(Modes mode)
+    {
+        _coloringConfiguration.Mode = mode;
+        TryEnableStartButton();
+    }
+
+    private void LevelSelectionView_LevelSelected(int levelResolution)
 	{
-        _bitmap.Size = new(levelResolution);
+        _coloringConfiguration.GridResolution = levelResolution;
+        _coloringConfiguration.Bitmap.Size = new(levelResolution);
+        TryEnableStartButton();
+    }
+
+    private void TryEnableStartButton()
+    {
+        if (_coloringConfiguration.Mode == null || _coloringConfiguration.GridResolution == null)
+            return;
 
         StartButton.IsEnabled = true;
-        StartButton.Clicked += StartButton_Clicked;
     }
 
     private async void SelectButton_Clicked(object sender, EventArgs e)
 	{
-        _bitmap = await _imageService.GetBitmapFromStorage();
+        _coloringConfiguration.Bitmap = await _imageService.GetBitmapFromStorage();
 
 		ImageResolutionLabel.IsVisible = true;
-        ImageResolutionValueLabel.Text = $"{_bitmap.Size.Width}x{_bitmap.Size.Height}, {_bitmap.Size.Width * _bitmap.Size.Height} pixels";
+        ImageResolutionValueLabel.Text = $"{_coloringConfiguration.Bitmap.Size.Width}x{_coloringConfiguration.Bitmap.Size.Height}, {_coloringConfiguration.Bitmap.Size.Width * _coloringConfiguration.Bitmap.Size.Height} pixels";
 
-		_levelSelectionView.GenerateLevels(_bitmap.SquaredResolution);
+		_levelSelectionView.GenerateLevels(_coloringConfiguration.Bitmap.SquaredResolution);
         Body.Add(_levelSelectionView, 0, 4);
 
         Body.Add(_modeSelectionView, 0, 5);
@@ -59,6 +75,6 @@ public partial class ImageConfigurationView : ContentView
 
 	private void StartButton_Clicked(object sender, EventArgs e)
 	{
-		BitmapSelected(_bitmap);
+		BitmapSelected(_coloringConfiguration.Bitmap);
     }
 }
