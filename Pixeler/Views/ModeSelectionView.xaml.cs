@@ -1,43 +1,65 @@
 using Pixeler.ExtendedViews;
+using Pixeler.Extensions;
+using Pixeler.Services;
 
 namespace Pixeler.Views;
 
 public enum Modes
 {
 	Direct,
-	LayeredBigToSmall,
-	LayeredSmallToBig
-}
 
-public enum LayeredModes
-{
-	Acryllic,
-	BlackBoard,
-	Oil
+    LayeredBigToSmall_Acryllic,
+    LayeredBigToSmall_BlackBoard,
+    LayeredBigToSmall_Oil
 }
 
 public partial class ModeSelectionView : ContentView
 {
-	private readonly AutoExtendableTypedGrid<Button> _modesGrid;
-	private readonly AutoExtendableTypedGrid<Button> _layeredModesGrid;
+    public event Action<Modes> SelectedModeChanged;
 
-	public ModeSelectionView()
+	private readonly IAudioService _audioService;
+	private readonly AutoExtendableTypedGrid<ToggleButton> _modesGrid;
+
+    private Dictionary<Modes, string> _modeNames = new()
+    {
+        { Modes.Direct, "Direct" },
+        { Modes.LayeredBigToSmall_Acryllic, "Layered, Big-To-Small (Acryllic)" },
+        { Modes.LayeredBigToSmall_BlackBoard, "Layered, Big-To-Small (BlackBoard)" },
+        { Modes.LayeredBigToSmall_Oil, "Layered, Big-To-Small (Oil)" },
+    };
+
+    public ModeSelectionView(IAudioService audioService)
 	{
+		_audioService = audioService;
+
 		InitializeComponent();
 
-        GenerateModes<Modes>(_modesGrid, 0);
-		GenerateModes<LayeredModes>(_layeredModesGrid, 1);
+        _modesGrid = new AutoExtendableTypedGrid<ToggleButton>();
+
+        CreateButton(Modes.Direct);
+        CreateButton(Modes.LayeredBigToSmall_Acryllic);
+        CreateButton(Modes.LayeredBigToSmall_BlackBoard);
+        CreateButton(Modes.LayeredBigToSmall_Oil);
+
+        Content = _modesGrid.Grid;
     }
 
-	private void GenerateModes<EnumType>(AutoExtendableTypedGrid<Button> grid, int row)
+	private ToggleButton CreateButton(Modes mode)
 	{
-        string[] modes = Enum.GetNames(typeof(EnumType));
+        ToggleButton button = new(false) { Text = _modeNames[mode] };
+        button.SetClickSound(_audioService);
+        button.Clicked += (_,_) => Button_Clicked(button, mode);
+        _modesGrid.AddToRight(button);
+		return button;
+    }
 
-		grid = new AutoExtendableTypedGrid<Button>();
+    private void Button_Clicked(ToggleButton button, Modes mode)
+    {
+        foreach (var item in _modesGrid.Children)
+            item.Enabled = true;
 
-		for (int i = 0; i < modes.Length; i++)
-			grid.AddToRight(new Button { Text = modes[i] });
+        button.Enabled = false;
 
-        Body.Add(grid.Grid, 0, row);
+        SelectedModeChanged(mode);
     }
 }
