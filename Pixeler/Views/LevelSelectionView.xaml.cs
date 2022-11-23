@@ -6,13 +6,13 @@ public partial class LevelSelectionView : ContentView
 {
 	public event Action<int> LevelSelected;
 
-	private readonly TypedGrid<Button> _grid;
+	private readonly TypedGrid<ToggleButton> _grid;
 
 	public LevelSelectionView()
 	{
 		InitializeComponent();
 
-		_grid = new TypedGrid<Button>();
+		_grid = new TypedGrid<ToggleButton>();
 	}
 
 	public void GenerateLevels(int squaredResolution)
@@ -20,16 +20,16 @@ public partial class LevelSelectionView : ContentView
         int minimumSize = 2;
         int step = 2;
         int currentSize = minimumSize;
-		List<Button> availableLevels = new();
+		List<ToggleButton> availableLevels = new();
 
 		while (currentSize < squaredResolution)
         {
-			Button button = new()
-			{
-				Text = currentSize.ToString(),
-			};
+            ToggleButton button = new()
+            {
+                Text = currentSize.ToString()
+            };
 
-			button.Clicked += LevelButton_Clicked;
+            button.Clicked += (_,_) => LevelButton_Clicked(button);
 
             availableLevels.Add(button);
 
@@ -44,16 +44,15 @@ public partial class LevelSelectionView : ContentView
 		Content = _grid.Grid;
     }
 
-	private void LevelButton_Clicked(object sender, EventArgs e)
+	private void LevelButton_Clicked(ToggleButton button)
 	{
-        foreach (var item in _grid.Children)
-        	item.IsEnabled = true; // MAUI issue here
+		foreach (var item in _grid.Children)
+			item.Enabled = true;
 
-        var button = (Button)sender;
-		button.IsEnabled = false;
+		button.Enabled = false;
 
-        int size = int.Parse(button.Text);
+		int size = int.Parse(button.Text);
 
 		LevelSelected(size);
-    }
+	}
 }
