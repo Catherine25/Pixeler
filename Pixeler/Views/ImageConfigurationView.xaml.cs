@@ -44,7 +44,6 @@ public partial class ImageConfigurationView : ContentView
     private void LevelSelectionView_LevelSelected(int levelResolution)
 	{
         _coloringConfiguration.GridResolution = levelResolution;
-        _coloringConfiguration.Bitmap.Size = new(levelResolution);
         TryEnableStartButton();
     }
 
