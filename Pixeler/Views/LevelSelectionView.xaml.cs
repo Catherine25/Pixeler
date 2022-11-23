@@ -1,4 +1,6 @@
 using Pixeler.ExtendedViews;
+using Pixeler.Extensions;
+using Pixeler.Services;
 
 namespace Pixeler.Views;
 
@@ -7,13 +9,15 @@ public partial class LevelSelectionView : ContentView
 	public event Action<int> LevelSelected;
 
 	private readonly TypedGrid<ToggleButton> _grid;
+    private readonly IAudioService _audioService;
 
-	public LevelSelectionView()
+    public LevelSelectionView(IAudioService audioService)
 	{
 		InitializeComponent();
 
 		_grid = new TypedGrid<ToggleButton>();
-	}
+        _audioService = audioService;
+    }
 
 	public void GenerateLevels(int squaredResolution)
 	{
@@ -29,6 +33,7 @@ public partial class LevelSelectionView : ContentView
                 Text = currentSize.ToString()
             };
 
+			button.SetClickSound(_audioService);
             button.Clicked += (_,_) => LevelButton_Clicked(button);
 
             availableLevels.Add(button);
