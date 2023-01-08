@@ -27,6 +27,8 @@ public partial class PixelView : ContentView
         if (Active)
         {
             OnPixelClicked(this);
+            Body.CornerRadius = 0;
+            Body.Margin = 0;
             Active = false;
         }
     }
