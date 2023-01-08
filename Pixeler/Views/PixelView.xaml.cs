@@ -18,6 +18,7 @@ public partial class PixelView : ContentView
 
         Body.Background = _defaultBrush;
         Body.BorderColor = _defaultColor.MColor;
+        Body.Margin = 5;
 
         Body.Clicked += Body_Clicked;
     }
