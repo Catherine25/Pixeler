@@ -26,7 +26,7 @@ public partial class ImageConfigurationView : ContentView
         _coloringConfiguration = new ColoringConfiguration();
 
         _levelSelectionView.LevelSelected += LevelSelectionView_LevelSelected;
-        _modeSelectionView.SelectedModeChanged += _modeSelectionView_SelectedModeChanged;
+        _modeSelectionView.SelectedModeChanged += ModeSelectionView_SelectedModeChanged;
 
         SelectButton.SetClickSound(audioService);
         SelectButton.Clicked += SelectButton_Clicked;
@@ -35,7 +35,7 @@ public partial class ImageConfigurationView : ContentView
         StartButton.Clicked += StartButton_Clicked;
     }
 
-    private void _modeSelectionView_SelectedModeChanged(Modes mode)
+    private void ModeSelectionView_SelectedModeChanged(Modes mode)
     {
         _coloringConfiguration.Mode = mode;
         _coloringConfiguration.ColoringFunc = ColoringFuncService.GetForMode(mode);
