@@ -63,7 +63,7 @@ public partial class ImageConfigurationView : ContentView
 		ImageResolutionLabel.IsVisible = true;
         ImageResolutionValueLabel.Text = $"{_coloringConfiguration.Bitmap.Size.Width}x{_coloringConfiguration.Bitmap.Size.Height}, {_coloringConfiguration.Bitmap.Size.Width * _coloringConfiguration.Bitmap.Size.Height} pixels";
 
-		_levelSelectionView.GenerateLevels(_coloringConfiguration.Bitmap.SquaredResolution);
+		_levelSelectionView.GenerateLevelButtons(_coloringConfiguration.Bitmap.SquaredResolution);
         Body.Add(_levelSelectionView, 0, 4);
 
         Body.Add(_modeSelectionView, 0, 5);

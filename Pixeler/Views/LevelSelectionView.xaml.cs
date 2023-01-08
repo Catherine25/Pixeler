@@ -19,7 +19,7 @@ public partial class LevelSelectionView : ContentView
         _audioService = audioService;
     }
 
-	public void GenerateLevels(int squaredResolution)
+	public void GenerateLevelButtons(int squaredResolution)
 	{
         int minimumSize = 2;
         int step = 2;
