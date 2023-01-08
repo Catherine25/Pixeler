@@ -25,13 +25,13 @@ public partial class PixelView : ContentView
 
     private void Body_Clicked(object sender, EventArgs e)
     {
-        if (Active)
-        {
-            OnPixelClicked(this);
-            Body.CornerRadius = 0;
-            Body.Margin = 0;
-            Active = false;
-        }
+        if (!Active)
+            return;
+
+        OnPixelClicked(this);
+        Body.CornerRadius = 0;
+        Body.Margin = 0;
+        Active = false;
     }
 
     public ColorData Color
