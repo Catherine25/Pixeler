@@ -34,10 +34,11 @@ public partial class DrawAreaView : ContentView
     {
         _coloringConfiguration = coloringConfiguration;
 
-        _typedGrid.Size = new Size((double)coloringConfiguration.GridResolution);
+        int resolution = coloringConfiguration.GridResolution.Value;
+        _typedGrid.Size = new Size(resolution);
 
-        for (int x = 0; x < coloringConfiguration.GridResolution; x++)
-            for (int y = 0; y < coloringConfiguration.GridResolution; y++)
+        for (int x = 0; x < resolution; x++)
+            for (int y = 0; y < resolution; y++)
             {
                 PixelView pixel = new(_settings);
                 pixel.OnPixelClicked += OnPixelClicked;
