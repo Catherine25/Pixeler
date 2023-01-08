@@ -6,7 +6,7 @@ namespace Pixeler.Services;
 
 public static class PaletteService
 {
-    public static IEnumerable<ColorData> BuildForMode(ColoringConfiguration coloringConfiguration)
+    public static IEnumerable<ColorData> Build(ColoringConfiguration coloringConfiguration)
     {
         if (coloringConfiguration.Mode == Modes.Direct)
             return BuildForDirectMode(coloringConfiguration);
@@ -24,7 +24,7 @@ public static class PaletteService
         for (int x = 0; x < coloringConfiguration.GridResolution; x++)
             for (int y = 0; y < coloringConfiguration.GridResolution; y++)
             {
-                var pixel = coloringConfiguration.Bitmap.GetPixel(x, y);
+                var pixel = coloringConfiguration.GetPixel(x, y);
                 palette.Add(pixel);
             }
 
@@ -38,7 +38,7 @@ public static class PaletteService
         for (int x = 0; x < coloringConfiguration.GridResolution; x++)
             for (int y = 0; y < coloringConfiguration.GridResolution; y++)
             {
-                var pixel = coloringConfiguration.Bitmap.GetPixel(x, y);
+                var pixel = coloringConfiguration.GetPixel(x, y);
                 palette.Add(pixel);
             }
 

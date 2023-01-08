@@ -60,10 +60,11 @@ public partial class ImageConfigurationView : ContentView
 	{
         _coloringConfiguration.Bitmap = await _imageService.GetBitmapFromStorage();
 
-		ImageResolutionLabel.IsVisible = true;
-        ImageResolutionValueLabel.Text = $"{_coloringConfiguration.Bitmap.Size.Width}x{_coloringConfiguration.Bitmap.Size.Height}, {_coloringConfiguration.Bitmap.Size.Width * _coloringConfiguration.Bitmap.Size.Height} pixels";
+        ImageResolutionLabel.IsVisible = true;
+        var size = _coloringConfiguration.Size;
+        ImageResolutionValueLabel.Text = $"{size.Width}x{size.Height}, {size.Width * size.Height} pixels";
 
-		_levelSelectionView.GenerateLevelButtons(_coloringConfiguration.Bitmap.SquaredResolution);
+		_levelSelectionView.GenerateLevelButtons(_coloringConfiguration.SquaredResolution);
         Body.Add(_levelSelectionView, 0, 4);
 
         Body.Add(_modeSelectionView, 0, 5);

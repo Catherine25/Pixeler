@@ -18,7 +18,7 @@ public partial class PaletteView : ContentView
         set
         {
             _colors = value;
-            SetColors();
+            RefreshColors();
         }
     }
     private IEnumerable<ColorData> _colors;
@@ -40,7 +40,10 @@ public partial class PaletteView : ContentView
         Content = _gridView.Grid;
     }
 
-    public void SetColors()
+    /// <summary>
+    /// Fulfills palette with colors.
+    /// </summary>
+    private void RefreshColors()
     {
         int paletteCount = Math.Min(_colors.Count(), _settings.PaletteSize);
         var subset = _colors.Take(paletteCount).ToList();
@@ -61,13 +64,16 @@ public partial class PaletteView : ContentView
         }
     }
 
+    /// <summary>
+    /// Completes selected palette color.
+    /// </summary>
     public void CompleteColor()
     {
         var item = _gridView.Children.Single(x => x.Selected);
         _gridView.Remove(item);
 
         if (_gridView.Count == 0)
-            SetColors();
+            RefreshColors();
     }
 
     private void Rect_Clicked(PaletteItemView paletteItem)

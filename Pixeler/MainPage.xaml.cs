@@ -38,7 +38,7 @@ public partial class MainPage : ContentPage
 		Body.ReplaceChild(_imageConfigurationView, _drawAreaView);
         _drawAreaView.SetConfiguration(coloringConfiguration);
 
-		var palette = PaletteService.BuildForMode(coloringConfiguration);
+		var palette = PaletteService.Build(coloringConfiguration);
 		_paletteView.Colors = palette;
     }
 }

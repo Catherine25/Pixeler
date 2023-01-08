@@ -57,10 +57,10 @@ public partial class DrawAreaView : ContentView
             var pixel = _typedGrid[i];
             var old = pixel.Color;
 
-            if (old == _coloringConfiguration.Bitmap.GetPixel(pixel.Location))
+            if (old == _coloringConfiguration.GetPixel(pixel.Location))
                 continue;
 
-            if (color == _coloringConfiguration.Bitmap.GetPixel(pixel.Location))
+            if (color == _coloringConfiguration.GetPixel(pixel.Location))
             {
                 pixel.Active = true;
                 _counter.Increase();
