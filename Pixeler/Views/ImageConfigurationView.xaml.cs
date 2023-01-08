@@ -23,7 +23,6 @@ public partial class ImageConfigurationView : ContentView
         _imageService = imageService;
         _levelSelectionView = levelSelectionView;
         _modeSelectionView = modeSelectionView;
-        _coloringConfiguration = new ColoringConfiguration();
 
         _levelSelectionView.LevelSelected += LevelSelectionView_LevelSelected;
         _modeSelectionView.SelectedModeChanged += ModeSelectionView_SelectedModeChanged;
@@ -58,7 +57,7 @@ public partial class ImageConfigurationView : ContentView
 
     private async void SelectButton_Clicked(object sender, EventArgs e)
 	{
-        _coloringConfiguration.Bitmap = await _imageService.GetBitmapFromStorage();
+        _coloringConfiguration = new ColoringConfiguration(await _imageService.GetBitmapFromStorage());
 
         ImageResolutionLabel.IsVisible = true;
         var size = _coloringConfiguration.Size;

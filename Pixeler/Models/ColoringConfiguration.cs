@@ -5,16 +5,21 @@ namespace Pixeler.Models;
 
 public class ColoringConfiguration
 {
-    public Bitmap Bitmap { set => bitmap = value; }
-    private Bitmap bitmap;
+    private Bitmap _bitmap;
 
     public int? GridResolution;
+    public int PixelPadding = 0;
 
     public Modes? Mode;
     public Func<ColorData, ColorData, ColorData> ColoringFunc { get; internal set; }
 
-    public ColorData GetPixel(Point point) => bitmap.GetPixel(point);
-    public ColorData GetPixel(int x, int y) => bitmap.GetPixel(x, y);
-    public Size Size => bitmap.Size;
-    public int SquaredResolution => bitmap.SquaredResolution;
+    public ColoringConfiguration(Bitmap bitmap)
+    {
+        _bitmap = bitmap;
+    }
+
+    public ColorData GetPixel(Point point) => _bitmap.GetPixel(point);
+    public ColorData GetPixel(int x, int y) => _bitmap.GetPixel(x, y);
+    public Size Size => _bitmap.Size;
+    public int SquaredResolution => _bitmap.SquaredResolution;
 }
