@@ -55,19 +55,20 @@ public partial class DrawAreaView : ContentView
 
         for (int i = 0; i < _typedGrid.Count; i++)
         {
-            var pixel = _typedGrid[i];
-            var old = pixel.Color;
+            var existingPixelView = _typedGrid[i];
+            var existingColor = existingPixelView.Color;
+            var originalColor = _coloringConfiguration.GetPixel(existingPixelView.Location);
 
-            if (old == _coloringConfiguration.GetPixel(pixel.Location))
+            if (existingColor == originalColor)
                 continue;
 
-            if (color == _coloringConfiguration.GetPixel(pixel.Location))
+            if (_pendingColor == originalColor)
             {
-                pixel.Active = true;
+                existingPixelView.Active = true;
                 _counter.Increase();
             }
             else
-                pixel.Active = false;
+                existingPixelView.Active = false;
         }
     }
 
