@@ -118,4 +118,7 @@ public abstract class HslColor : RgbColor
             return q1 + (q2 - q1) * (240 - hue) / 60;
         return q1;
     }
+
+    public bool IsLighterThan(HslColor other) => L > other.L;
+    public bool IsDarkerThan(HslColor other) => L < other.L;
 }
