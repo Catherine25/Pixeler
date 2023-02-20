@@ -7,7 +7,7 @@ public abstract class Color
     protected Color(string hex)
     {
         if (hex == null)
-            Hex = "00000000";
+            Hex = TransparentString;
         else
         {
             Hex = hex.Remove("#");
@@ -18,4 +18,7 @@ public abstract class Color
     }
 
     public string Hex { get; protected set; }
+    private const string TransparentString = "00000000";
+
+    public bool IsTransparent() => Hex == TransparentString;
 }
