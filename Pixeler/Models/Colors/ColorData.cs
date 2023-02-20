@@ -12,7 +12,7 @@ public sealed class ColorData : HslColor
     public const double StepL = 0.1;
     public const double StepS = 0.1;
 
-    public static bool operator ==(ColorData x, ColorData y) => x.ToString() == y.ToString();
+    public static bool operator ==(ColorData x, ColorData y) => x?.ToString() == y?.ToString();
     public static bool operator !=(ColorData x, ColorData y) => !(x == y);
 
     public override bool Equals(object obj) => ToString() == obj.ToString();
