@@ -2,5 +2,8 @@
 <ContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="Pixeler.Views.PixelView">
-    <Button x:Name="Body"/>
+    <Grid>
+        <Button x:Name="Body"/>
+        <GraphicsView x:Name="GraphicsView"/>
+    </Grid>
 </ContentView>

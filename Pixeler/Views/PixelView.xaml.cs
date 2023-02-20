@@ -20,10 +20,12 @@ public partial class PixelView : ContentView
         Body.BorderColor = _defaultColor.MColor;
         Body.Margin = 5;
 
-        Body.Clicked += Body_Clicked;
+        // old way of handling
+        // Body.Clicked += (_, _) => Interacted();
+        GraphicsView.StartHoverInteraction += (_, _) => Interacted();
     }
 
-    private void Body_Clicked(object sender, EventArgs e)
+    private void Interacted()
     {
         if (!Active)
             return;
