@@ -11,7 +11,7 @@ public class ColoringConfiguration
     public int PixelPadding = 0;
 
     public Modes? Mode;
-    public Func<ColorData, ColorData, ColorData> ColoringFunc { get; internal set; }
+    public Func<ColorData, ColorData, ColorData, ColorData> CalculateColor { get; internal set; }
 
     public ColoringConfiguration(Bitmap bitmap)
     {

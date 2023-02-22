@@ -59,16 +59,18 @@ public partial class DrawAreaView : ContentView
             var existingColor = existingPixelView.Color;
             var originalColor = _coloringConfiguration.GetPixel(existingPixelView.Location);
 
-            if (existingColor == originalColor)
-                continue;
+            // calculate color
+            var newColor = _coloringConfiguration.CalculateColor(existingColor, _pendingColor, originalColor);
 
-            if (_pendingColor == originalColor)
+            // if the color was not calculated - skip
+            // it means that existing and selected colors will not result the needed color
+            if (newColor == null)
+                existingPixelView.Active = false;
+            else
             {
                 existingPixelView.Active = true;
                 _counter.Increase();
             }
-            else
-                existingPixelView.Active = false;
         }
     }
 

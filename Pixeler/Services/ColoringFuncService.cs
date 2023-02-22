@@ -5,30 +5,77 @@ namespace Pixeler.Services
 {
     public static class ColoringFuncService
     {
-        private static Dictionary<Modes, Func<ColorData, ColorData, ColorData>> ModeToColorerFunc = new Dictionary<Modes, Func<ColorData, ColorData, ColorData>>
+        private static readonly Dictionary<Modes, Func<ColorData, ColorData, ColorData, ColorData>> ModeToColorerFunc = new()
         {
             {
-                Modes.Direct,
-                (extisting, selected) => DirectColorerFunc(extisting, selected)
+                Modes.Direct, Direct_ColorerFunc
             },
             {
-                Modes.LayeredBigToSmall_Acryllic,
-                (extisting, selected) => LayeredBigToSmallAcryllic_ColorerFunc(extisting, selected)
+                Modes.LayeredBigToSmall_Acryllic, LayeredBigToSmallAcryllic_ColorerFunc
             }
         };
 
         /// <summary>
-        /// 1st - extisting
-        /// 2nd - current selected
-        /// 3rd - resulting
+        /// 1st - Color of the pixel in drawing area.
+        /// 2nd - Current selected brush color.
+        /// 3rd - Color of the pixel in the original image.
         /// </summary>
-        /// <param name="modes"></param>
-        /// <returns></returns>
-        /// <exception cref="NotSupportedException"></exception>
-        public static Func<ColorData, ColorData, ColorData> GetForMode(Modes modes) => ModeToColorerFunc[modes];
+        /// <returns>The resulting color.</returns>
+        public static Func<ColorData, ColorData, ColorData, ColorData> GetForMode(Modes modes) => ModeToColorerFunc[modes];
 
-        private static ColorData DirectColorerFunc(ColorData extisting, ColorData selected) => selected;
+        private static ColorData Direct_ColorerFunc(ColorData extisting, ColorData selected, ColorData original)
+        {
+            // skip already colored
+            if (extisting == original)
+                return null;
 
-        private static ColorData LayeredBigToSmallAcryllic_ColorerFunc(ColorData extisting, ColorData selected) => extisting.L >= selected.L ? selected : null;
+            // skip if selected color is not same as original
+            if (selected != original)
+                return null;
+
+            return original;
+        }
+
+        /// <summary>
+        /// Gets difference of lightness between selected and existing.
+        /// If lightness of the selected color is less than lightness of the pixel - returns the selected color.
+        /// </summary>
+        private static ColorData LayeredBigToSmallAcryllic_ColorerFunc(ColorData extisting, ColorData selected, ColorData original)
+        {
+            // skip already colored
+            if (extisting == original)
+                return null;
+
+            // apply color
+            ColorData candidateColor = SumColors(extisting, selected);
+
+            // if selected color is same to original - just apply it
+            if (selected == original)
+                return selected;
+
+            // skip if the candidate color is darker than needed
+            if (candidateColor.IsDarkerThan(original))
+                return null;
+
+            // skip if the candidate color has different hue
+            if((int)candidateColor.H != (int)original.H) // && !extisting.IsTransparent())
+                return null;
+
+            return candidateColor;
+        }
+
+        private static ColorData SumColors(ColorData c1, ColorData c2)
+        {
+            int r = Math.Min(c1.R + c2.R, 255);
+            int g = Math.Min(c1.G + c2.G, 255);
+            int b = Math.Min(c1.B + c2.B, 255);
+
+            var color = System.Drawing.Color.FromArgb(Convert.ToByte(r),
+                             Convert.ToByte(g),
+                             Convert.ToByte(b));
+
+            return new ColorData(color.Name);
+        }
+
     }
 }
