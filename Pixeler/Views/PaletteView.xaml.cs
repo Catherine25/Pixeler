@@ -72,8 +72,15 @@ public partial class PaletteView : ContentView
         var item = _gridView.Children.Single(x => x.Selected);
         _gridView.Remove(item);
 
-        if (_gridView.Count == 0)
+        // all colors from current pallette are used
+        if (_gridView.Empty)
             RefreshColors();
+
+        // coloring finished
+        if(_gridView.Empty)
+            throw new NotImplementedException();
+        
+        SelectPaletteItem(_gridView.Children.First());
     }
 
     private void Rect_Clicked(PaletteItemView paletteItem)
@@ -81,10 +88,10 @@ public partial class PaletteView : ContentView
         _audioService.Play();
 
         DeselectPreviouslySelected();
-        SelectPaletteItem(paletteItem);
 
-        OnColorDataChosen(paletteItem.Color);
+        SelectPaletteItem(paletteItem);
     }
+
 
     private void DeselectPreviouslySelected()
     {
@@ -99,5 +106,7 @@ public partial class PaletteView : ContentView
         var paletteItemViews = _gridView.Children;
         var paletteItemView = paletteItemViews.Single(x => x.Color == paletteItem.Color);
         paletteItemView.Selected = true;
+
+        OnColorDataChosen(paletteItem.Color);
     }
 }

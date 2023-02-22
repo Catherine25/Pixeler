@@ -37,7 +37,9 @@ public class TypedGrid<T>
     }
 
     public IList<T> Children => Grid.ChildrenAs<T>();
+
     public int Count => Grid.Count;
+    public bool Empty => Grid.Count == 0;
 
     public void Add(T item, Point point) => Add(item, (int)point.X, (int)point.Y);
     public void Add(T item, int x, int y) => Grid.Add(item, x, y);
