@@ -28,6 +28,7 @@ public partial class MainPage : ContentPage
         _drawAreaView.ColorCompleted += _paletteView.CompleteColor;
 		_imageConfigurationView.ColoringConfigurationCompleted += ColoringConfigurationCompleted;
         _paletteView.OnColorDataChosen += _drawAreaView.SetPixelsToColor;
+        _paletteView.AreaColorsDone += AreaColorsDone;
 
 		Body.Add(_imageConfigurationView, _imageConfigurationViewLocation);
 		Body.Add(_paletteView, _paletteViewLocation);
@@ -41,4 +42,9 @@ public partial class MainPage : ContentPage
 		var palette = PaletteService.Build(coloringConfiguration);
 		_paletteView.Colors = palette;
     }
+
+	private void AreaColorsDone()
+	{
+		throw new NotImplementedException();
+	}
 }

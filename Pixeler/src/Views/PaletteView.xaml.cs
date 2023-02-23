@@ -8,7 +8,7 @@ namespace Pixeler.Views;
 public partial class PaletteView : ContentView
 {
     public event Action<ColorData> OnColorDataChosen;
-    public event Action AllColorsDone;
+    public event Action AreaColorsDone;
 
     private readonly TypedGrid<PaletteItemView> _gridView;
     private readonly IAudioService _audioService;
@@ -79,7 +79,7 @@ public partial class PaletteView : ContentView
 
         // coloring finished
         if (_gridView.Empty)
-            AllColorsDone();
+            AreaColorsDone();
         
         SelectPaletteItem(_gridView.Children.First());
     }
