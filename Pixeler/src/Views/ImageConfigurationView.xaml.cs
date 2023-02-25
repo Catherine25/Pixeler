@@ -9,18 +9,21 @@ public partial class ImageConfigurationView : ContentView
 	public Action<ColoringConfiguration> ColoringConfigurationCompleted;
 
     private readonly IImageService _imageService;
+    private readonly ILocatorService _locatorService;
 	private readonly LevelSelectionView _levelSelectionView;
 	private readonly ModeSelectionView _modeSelectionView;
     private ColoringConfiguration _coloringConfiguration;
 
     public ImageConfigurationView(IAudioService audioService,
 		IImageService imageService,
+        ILocatorService locatorService,
         LevelSelectionView levelSelectionView,
         ModeSelectionView modeSelectionView)
 	{
 		InitializeComponent();
 
         _imageService = imageService;
+        _locatorService = locatorService;
         _levelSelectionView = levelSelectionView;
         _modeSelectionView = modeSelectionView;
 
@@ -44,12 +47,13 @@ public partial class ImageConfigurationView : ContentView
     private void LevelSelectionView_LevelSelected(int levelResolution)
 	{
         _coloringConfiguration.GridResolution = levelResolution;
+
         TryEnableStartButton();
     }
 
     private void TryEnableStartButton()
     {
-        if (_coloringConfiguration.Mode == null || _coloringConfiguration.GridResolution == null)
+        if (_coloringConfiguration.Mode == null || _coloringConfiguration.GridResolution == 0)
             return;
 
         StartButton.IsEnabled = true;
@@ -57,7 +61,9 @@ public partial class ImageConfigurationView : ContentView
 
     private async void SelectButton_Clicked(object sender, EventArgs e)
 	{
-        _coloringConfiguration = new ColoringConfiguration(await _imageService.GetBitmapFromStorage());
+        var bitmap = await _imageService.GetBitmapFromStorage();
+
+        _coloringConfiguration = new ColoringConfiguration(bitmap, _locatorService);
 
         ImageResolutionLabel.IsVisible = true;
         var size = _coloringConfiguration.Size;

@@ -22,6 +22,7 @@ public static class MauiProgram
 		builder.Services.AddScoped<ISettings, Settings>();
 		builder.Services.AddScoped<IAudioService, AudioService>();
 		builder.Services.AddScoped<IImageService, ImageService>();
+		builder.Services.AddScoped<ILocatorService, LocatorService>();
 
 		builder.Services.AddTransient<DrawAreaView>();
 		builder.Services.AddTransient<ImageConfigurationView>();

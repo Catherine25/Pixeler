@@ -34,7 +34,7 @@ public partial class DrawAreaView : ContentView
     {
         _coloringConfiguration = coloringConfiguration;
 
-        int resolution = coloringConfiguration.GridResolution.Value;
+        int resolution = coloringConfiguration.GridResolution;
         _typedGrid.Size = new Size(resolution);
 
         for (int x = 0; x < resolution; x++)
