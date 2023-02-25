@@ -18,20 +18,29 @@ public static class MauiProgram
 				fonts.AddFont("OpenSans-Semibold.ttf", "OpenSansSemibold");
 			});
 
-		builder.Services.AddSingleton(AudioManager.Current);
-		builder.Services.AddScoped<ISettings, Settings>();
-		builder.Services.AddScoped<IAudioService, AudioService>();
-		builder.Services.AddScoped<IImageService, ImageService>();
-		builder.Services.AddScoped<ILocatorService, LocatorService>();
-
-		builder.Services.AddTransient<DrawAreaView>();
-		builder.Services.AddTransient<ImageConfigurationView>();
-		builder.Services.AddTransient<LevelSelectionView>();
-		builder.Services.AddTransient<ModeSelectionView>();
-        builder.Services.AddTransient<PaletteView>();
-
-		builder.Services.AddTransient<MainPage>();
+		RegisterServices(builder);
+        RegisterViews(builder);
 
 		return builder.Build();
 	}
+
+	private static void RegisterServices(MauiAppBuilder builder)
+	{
+        builder.Services.AddSingleton(AudioManager.Current);
+        builder.Services.AddScoped<ISettings, Settings>();
+        builder.Services.AddScoped<IAudioService, AudioService>();
+        builder.Services.AddScoped<IImageService, ImageService>();
+        builder.Services.AddScoped<ILocatorService, LocatorService>();
+    }
+
+    private static void RegisterViews(MauiAppBuilder builder)
+    {
+        builder.Services.AddTransient<DrawAreaView>();
+        builder.Services.AddTransient<ImageConfigurationView>();
+        builder.Services.AddTransient<LevelSelectionView>();
+        builder.Services.AddTransient<ModeSelectionView>();
+        builder.Services.AddTransient<PaletteView>();
+
+        builder.Services.AddTransient<MainPage>();
+    }
 }
