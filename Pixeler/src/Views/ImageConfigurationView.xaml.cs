@@ -13,6 +13,8 @@ public partial class ImageConfigurationView : ContentView
 	private readonly LevelSelectionView _levelSelectionView;
 	private readonly ModeSelectionView _modeSelectionView;
     private ColoringConfiguration _coloringConfiguration;
+    private readonly Point _levelSelectionViewLocation = new(0, 4);
+    private readonly Point _modeSelectionViewLocation = new(0, 5);
 
     public ImageConfigurationView(IAudioService audioService,
 		IImageService imageService,
@@ -70,9 +72,8 @@ public partial class ImageConfigurationView : ContentView
         ImageResolutionValueLabel.Text = $"{size.Width}x{size.Height}, {size.Width * size.Height} pixels";
 
 		_levelSelectionView.GenerateLevelButtons(_coloringConfiguration.SquaredResolution);
-        Body.Add(_levelSelectionView, 0, 4);
-
-        Body.Add(_modeSelectionView, 0, 5);
+        Body.Add(_levelSelectionView, _levelSelectionViewLocation);
+        Body.Add(_modeSelectionView, _modeSelectionViewLocation);
 
         StartButton.IsVisible = true;
     }
