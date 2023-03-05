@@ -3,12 +3,51 @@ using Pixeler.Models.Colors;
 
 namespace Pixeler.Views;
 
+public enum ColoringStates
+{
+    Passive,
+    Waiting,
+    Finising,
+    Done,
+}
+
 public partial class PixelView : ContentView
 {
     private static readonly ColorData _defaultColor = new(null);
     private static readonly SolidColorBrush _defaultBrush = new(_defaultColor.MColor);
+
     private ISettings _settings;
     public Action<PixelView> OnPixelClicked { get; set; }
+    public bool ColoringDone = false;
+
+    public ColorData Color
+    {
+        get
+        {
+            return _color ?? _defaultColor;
+        }
+        set
+        {
+            _color = value;
+            Body.Background = new SolidColorBrush(_color.MColor);
+        }
+    }
+    private ColorData _color;
+
+    public Point Location => new(Grid.GetColumn(this), Grid.GetRow(this));
+
+    public ColoringStates ColoringState
+    {
+        get => _coloringState;
+        set
+        {
+            _coloringState = value;
+            Body.BorderColor = ColoringState == ColoringStates.Waiting || ColoringState == ColoringStates.Finising
+                ? _settings.AccentColor.MColor
+                : _defaultColor.MColor;
+        }
+    }
+    private ColoringStates _coloringState;
 
     public PixelView(ISettings settings)
     {
@@ -27,39 +66,15 @@ public partial class PixelView : ContentView
 
     private void Interacted()
     {
-        if (!Active)
+        if (ColoringState != ColoringStates.Waiting && ColoringState != ColoringStates.Finising)
             return;
 
         OnPixelClicked(this);
         Body.CornerRadius = 0;
         Body.Margin = 0;
-        Active = false;
-    }
 
-    public ColorData Color
-    {
-        get
-        {
-            return _color ?? _defaultColor;
-        }
-        set
-        {
-            _color = value;
-            Body.Background = new SolidColorBrush(_color.MColor);
-        }
+        ColoringState = ColoringState == ColoringStates.Finising
+            ? ColoringState = ColoringStates.Done
+            : ColoringState = ColoringStates.Passive;
     }
-    private ColorData _color;
-
-    public Point Location => new(Grid.GetColumn(this), Grid.GetRow(this));
-
-    public bool Active
-    {
-        get => _active;
-        set
-        {
-            _active = value;
-            Body.BorderColor = _active ? _settings.AccentColor.MColor : _defaultColor.MColor;
-        }
-    }
-    private bool _active;
 }

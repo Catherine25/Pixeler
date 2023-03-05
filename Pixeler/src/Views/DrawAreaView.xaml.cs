@@ -53,9 +53,15 @@ public partial class DrawAreaView : ContentView
 
         _pendingColor = color;
 
+        // todo foreach
         for (int i = 0; i < _typedGrid.Count; i++)
         {
             var existingPixelView = _typedGrid[i];
+
+            // skip if the pixel coloring is done
+            if(existingPixelView.ColoringState == ColoringStates.Done)
+                continue;
+
             var existingColor = existingPixelView.Color;
             var originalColor = _coloringConfiguration.GetPixel(existingPixelView.Location);
 
@@ -65,13 +71,20 @@ public partial class DrawAreaView : ContentView
             // if the color was not calculated - skip
             // it means that existing and selected colors will not result the needed color
             if (newColor == null)
-                existingPixelView.Active = false;
+                existingPixelView.ColoringState = ColoringStates.Passive;
             else
             {
-                existingPixelView.Active = true;
+                // mark as 'finishing' if new color is the same as original
+                existingPixelView.ColoringState = newColor == originalColor
+                    ? existingPixelView.ColoringState = ColoringStates.Finising
+                    : existingPixelView.ColoringState = ColoringStates.Waiting;
                 _counter.Increase();
             }
         }
+
+        // if the cell was colored by mixing other lighter colors - skip it
+        if (_counter.Value == 0)
+            ColorCompleted();
     }
 
     private void OnPixelClicked(PixelView pixel)
