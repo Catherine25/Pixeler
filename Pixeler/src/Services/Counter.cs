@@ -4,6 +4,7 @@ public class Counter
 {
     public event Action CountedToNull;
 
+    public int Value => _value;
     private int _value;
 
     public void Increase() => _value++;
