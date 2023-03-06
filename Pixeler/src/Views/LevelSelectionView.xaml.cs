@@ -9,7 +9,6 @@ public partial class LevelSelectionView : ContentView
 {
 	public event Action<int> LevelSelected;
 
-    private const int MinimumGridSize = 2;
     private readonly TypedGrid<ToggleButton> _grid;
     private readonly IAudioService _audioService;
     private readonly ISettings _settings;
