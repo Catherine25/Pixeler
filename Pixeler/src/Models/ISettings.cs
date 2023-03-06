@@ -9,4 +9,6 @@ public interface ISettings
     public int PaletteSize { get; }
     public string SoundPath { get; }
     public (int Min, int Max) LevelSizeRange { get; }
+    public int PixelHighlightThickness { get; }
+    public int PixelMargin { get; }
 }

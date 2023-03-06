@@ -57,7 +57,8 @@ public partial class PixelView : ContentView
 
         Body.Background = _defaultBrush;
         Body.BorderColor = _defaultColor.MColor;
-        Body.Margin = 5;
+        Body.BorderWidth = _settings.PixelHighlightThickness;
+        Body.Margin = _settings.PixelMargin;
 
         // old way of handling
         // Body.Clicked += (_, _) => Interacted();
