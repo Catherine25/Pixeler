@@ -8,4 +8,5 @@ public interface ISettings
     public Size BitmapSize { get; }
     public int PaletteSize { get; }
     public string SoundPath { get; }
+    public (int Min, int Max) LevelSizeRange { get; }
 }

@@ -1,5 +1,6 @@
 using Pixeler.ExtendedViews;
 using Pixeler.Extensions;
+using Pixeler.Models;
 using Pixeler.Services;
 
 namespace Pixeler.Views;
@@ -11,22 +12,25 @@ public partial class LevelSelectionView : ContentView
     private const int MinimumGridSize = 2;
     private readonly TypedGrid<ToggleButton> _grid;
     private readonly IAudioService _audioService;
+    private readonly ISettings _settings;
 
-    public LevelSelectionView(IAudioService audioService)
+    public LevelSelectionView(IAudioService audioService, ISettings settings)
 	{
 		InitializeComponent();
 
 		_grid = new TypedGrid<ToggleButton>();
         _audioService = audioService;
+        _settings = settings;
     }
 
 	public void GenerateLevelButtons(int squaredResolution)
 	{
-        int currentSize = MinimumGridSize;
+		int maximumLevelSize = Math.Min(squaredResolution, _settings.LevelSizeRange.Max);
         int step = 2;
+        int currentSize = _settings.LevelSizeRange.Min;
 		List<ToggleButton> availableLevels = new();
 
-		while (currentSize < squaredResolution)
+		while (currentSize <= maximumLevelSize)
         {
             ToggleButton button = new(false)
             {
