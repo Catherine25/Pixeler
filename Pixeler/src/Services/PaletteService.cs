@@ -20,8 +20,9 @@ public static class PaletteService
     public static IEnumerable<ColorData> BuildForDirectMode(ColoringConfiguration coloringConfiguration)
     {
         var palette = new HashSet<ColorData>();
+        int gridResolution = coloringConfiguration.GridResolution;
 
-        for (int x = 0; x < coloringConfiguration.GridResolution; x++)
+        for (int x = 0; x < gridResolution; x++)
             for (int y = 0; y < coloringConfiguration.GridResolution; y++)
             {
                 var pixel = coloringConfiguration.GetPixel(x, y);
@@ -34,8 +35,9 @@ public static class PaletteService
     public static IEnumerable<ColorData> BuildForLayeredBigToSmallAcryllicMode(ColoringConfiguration coloringConfiguration)
     {
         var palette = new HashSet<ColorData>();
+        int gridResolution = coloringConfiguration.GridResolution;
 
-        for (int x = 0; x < coloringConfiguration.GridResolution; x++)
+        for (int x = 0; x < gridResolution; x++)
             for (int y = 0; y < coloringConfiguration.GridResolution; y++)
             {
                 var pixel = coloringConfiguration.GetPixel(x, y);
