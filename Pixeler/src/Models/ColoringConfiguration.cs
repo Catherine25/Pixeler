@@ -43,8 +43,6 @@ public class ColoringConfiguration
     {
         var real = _locatorService.CalculateRealPixelLocation(x, y, Margin, Padding);
 
-        this.Log($"{x}, {y} -> {real.X}, {real.Y}");
-
         return _bitmap.GetPixel(real);
     }
 
