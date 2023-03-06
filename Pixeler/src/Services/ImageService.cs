@@ -23,26 +23,17 @@ public class ImageService : IImageService
 
     private static async Task<FileResult> SelectFile()
     {
-        try
+        var result = await FilePicker.Default.PickAsync(new PickOptions());
+        if (result != null)
         {
-            var result = await FilePicker.Default.PickAsync(new PickOptions());
-            if (result != null)
+            if (result.FileName.EndsWith("jpg", StringComparison.OrdinalIgnoreCase) ||
+                result.FileName.EndsWith("png", StringComparison.OrdinalIgnoreCase))
             {
-                if (result.FileName.EndsWith("jpg", StringComparison.OrdinalIgnoreCase) ||
-                    result.FileName.EndsWith("png", StringComparison.OrdinalIgnoreCase))
-                {
-                    using var stream = await result.OpenReadAsync();
-                    var image = ImageSource.FromStream(() => stream);
-                }
+                using var stream = await result.OpenReadAsync();
+                var image = ImageSource.FromStream(() => stream);
             }
-
-            return result;
-        }
-        catch (Exception)
-        {
-            // todo
         }
 
-        return null;
+        return result;
     }
 }
