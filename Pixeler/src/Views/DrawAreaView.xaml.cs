@@ -75,7 +75,7 @@ public partial class DrawAreaView : ContentView
             else
             {
                 // mark as 'finishing' if new color is the same as original
-                existingPixelView.ColoringState = newColor == originalColor
+                existingPixelView.ColoringState = newColor.IsFinal
                     ? existingPixelView.ColoringState = ColoringStates.Finising
                     : existingPixelView.ColoringState = ColoringStates.Waiting;
                 _counter.Increase();

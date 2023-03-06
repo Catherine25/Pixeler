@@ -29,7 +29,7 @@ public class ColoringConfiguration
     private int Padding;
 
     public Modes? Mode;
-    public Func<ColorData, ColorData, ColorData, ColorData> CalculateColor { get; internal set; }
+    public Func<ColorData, ColorData, ColorData, MixingResult> CalculateColor { get; internal set; }
     private ILocatorService _locatorService;
 
     public ColoringConfiguration(Bitmap bitmap, ILocatorService locatorService)

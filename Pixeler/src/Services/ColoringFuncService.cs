@@ -3,9 +3,21 @@ using Pixeler.Views;
 
 namespace Pixeler.Services
 {
+    public class MixingResult
+    {
+        public ColorData Result;
+        public bool IsFinal;
+
+        public MixingResult(ColorData result, bool isFinal = true)
+        {
+            Result = result;
+            IsFinal = isFinal;
+        }
+    }
+
     public static class ColoringFuncService
     {
-        private static readonly Dictionary<Modes, Func<ColorData, ColorData, ColorData, ColorData>> ModeToColorerFunc = new()
+        private static readonly Dictionary<Modes, Func<ColorData, ColorData, ColorData, MixingResult>> ModeToColorerFunc = new()
         {
             {
                 Modes.Direct, Direct_ColorerFunc
@@ -21,9 +33,9 @@ namespace Pixeler.Services
         /// 3rd - Color of the pixel in the original image.
         /// </summary>
         /// <returns>The resulting color.</returns>
-        public static Func<ColorData, ColorData, ColorData, ColorData> GetForMode(Modes modes) => ModeToColorerFunc[modes];
+        public static Func<ColorData, ColorData, ColorData, MixingResult> GetForMode(Modes modes) => ModeToColorerFunc[modes];
 
-        private static ColorData Direct_ColorerFunc(ColorData extisting, ColorData selected, ColorData original)
+        private static MixingResult Direct_ColorerFunc(ColorData extisting, ColorData selected, ColorData original)
         {
             // skip already colored
             if (extisting == original)
@@ -33,35 +45,35 @@ namespace Pixeler.Services
             if (selected != original)
                 return null;
 
-            return original;
+            return new MixingResult(original);
         }
 
         /// <summary>
         /// Gets difference of lightness between selected and existing.
         /// If lightness of the selected color is less than lightness of the pixel - returns the selected color.
         /// </summary>
-        private static ColorData LayeredBigToSmallAcryllic_ColorerFunc(ColorData extisting, ColorData selected, ColorData original)
+        private static MixingResult LayeredBigToSmallAcryllic_ColorerFunc(ColorData extisting, ColorData selected, ColorData original)
         {
             // skip already colored
             if (extisting == original)
                 return null;
 
-            // apply color
-            ColorData candidateColor = SumColors(extisting, selected);
-
             // if selected color is same to original - just apply it
             if (selected == original)
-                return selected;
+                return new MixingResult(selected);
+
+            // apply color
+            ColorData candidateColor = SumColors(extisting, selected);
 
             // skip if the candidate color is darker than needed
             if (candidateColor.IsDarkerThan(original))
                 return null;
 
             // skip if the candidate color has different hue
-            if((int)candidateColor.H != (int)original.H) // && !extisting.IsTransparent())
+            if((int)candidateColor.H != (int)original.H)
                 return null;
 
-            return candidateColor;
+            return new MixingResult(candidateColor, original == candidateColor);
         }
 
         private static ColorData SumColors(ColorData c1, ColorData c2)
