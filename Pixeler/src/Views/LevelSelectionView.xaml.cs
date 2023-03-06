@@ -8,7 +8,8 @@ public partial class LevelSelectionView : ContentView
 {
 	public event Action<int> LevelSelected;
 
-	private readonly TypedGrid<ToggleButton> _grid;
+    private const int MinimumGridSize = 2;
+    private readonly TypedGrid<ToggleButton> _grid;
     private readonly IAudioService _audioService;
 
     public LevelSelectionView(IAudioService audioService)
@@ -21,9 +22,8 @@ public partial class LevelSelectionView : ContentView
 
 	public void GenerateLevelButtons(int squaredResolution)
 	{
-        int minimumSize = 2;
+        int currentSize = MinimumGridSize;
         int step = 2;
-        int currentSize = minimumSize;
 		List<ToggleButton> availableLevels = new();
 
 		while (currentSize < squaredResolution)
