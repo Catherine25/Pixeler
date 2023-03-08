@@ -11,8 +11,8 @@ public static class PaletteService
         if (coloringConfiguration.Mode == Modes.Direct)
             return BuildForDirectMode(coloringConfiguration);
 
-        if (coloringConfiguration.Mode == Modes.LayeredBigToSmall_Acryllic)
-            return BuildForLayeredBigToSmallAcryllicMode(coloringConfiguration);
+        if (coloringConfiguration.Mode == Modes.Layered_Acryllic)
+            return BuildForLayeredAcryllicMode(coloringConfiguration);
 
         throw new NotSupportedException();
     }
@@ -32,7 +32,7 @@ public static class PaletteService
         return palette;
     }
 
-    public static IEnumerable<ColorData> BuildForLayeredBigToSmallAcryllicMode(ColoringConfiguration coloringConfiguration)
+    public static IEnumerable<ColorData> BuildForLayeredAcryllicMode(ColoringConfiguration coloringConfiguration)
     {
         var palette = new HashSet<ColorData>();
         int gridResolution = coloringConfiguration.GridResolution;

@@ -23,7 +23,7 @@ namespace Pixeler.Services
                 Modes.Direct, Direct_ColorerFunc
             },
             {
-                Modes.LayeredBigToSmall_Acryllic, LayeredBigToSmallAcryllic_ColorerFunc
+                Modes.Layered_Acryllic, LayeredBigToSmallAcryllic_ColorerFunc
             }
         };
 

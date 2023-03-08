@@ -8,9 +8,10 @@ public enum Modes
 {
 	Direct,
 
-    LayeredBigToSmall_Acryllic,
-    LayeredBigToSmall_BlackBoard,
-    LayeredBigToSmall_Oil
+    Layered_Acryllic,
+
+    Layered_BigToSmall_BlackBoard,
+    Layered_BigToSmall_Oil
 }
 
 public partial class ModeSelectionView : ContentView
@@ -23,9 +24,9 @@ public partial class ModeSelectionView : ContentView
     private Dictionary<Modes, string> _modeNames = new()
     {
         { Modes.Direct, "Direct" },
-        { Modes.LayeredBigToSmall_Acryllic, "Layered, Big-To-Small (Acryllic)" },
-        { Modes.LayeredBigToSmall_BlackBoard, "Layered, Big-To-Small (BlackBoard)" },
-        { Modes.LayeredBigToSmall_Oil, "Layered, Big-To-Small (Oil)" },
+        { Modes.Layered_Acryllic, "Layered Acryllic" },
+        { Modes.Layered_BigToSmall_BlackBoard, "Layered Big-To-Small (BlackBoard)" },
+        { Modes.Layered_BigToSmall_Oil, "Layered Big-To-Small (Oil)" },
     };
 
     public ModeSelectionView(IAudioService audioService)
@@ -37,9 +38,9 @@ public partial class ModeSelectionView : ContentView
         _modesGrid = new AutoExtendableTypedGrid<ToggleButton>();
 
         CreateButton(Modes.Direct);
-        CreateButton(Modes.LayeredBigToSmall_Acryllic);
-        CreateButton(Modes.LayeredBigToSmall_BlackBoard);
-        CreateButton(Modes.LayeredBigToSmall_Oil);
+        CreateButton(Modes.Layered_Acryllic);
+        CreateButton(Modes.Layered_BigToSmall_BlackBoard);
+        CreateButton(Modes.Layered_BigToSmall_Oil);
 
         Content = _modesGrid.Grid;
     }
