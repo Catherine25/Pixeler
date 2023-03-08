@@ -1,6 +1,6 @@
+using Pixeler.Configuration;
 using Pixeler.ExtendedViews;
 using Pixeler.Extensions;
-using Pixeler.Models;
 using Pixeler.Services;
 
 namespace Pixeler.Views;

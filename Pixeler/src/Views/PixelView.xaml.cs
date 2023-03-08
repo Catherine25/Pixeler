@@ -1,4 +1,4 @@
-using Pixeler.Models;
+using Pixeler.Configuration;
 using Pixeler.Models.Colors;
 
 namespace Pixeler.Views;
@@ -16,7 +16,7 @@ public partial class PixelView : ContentView
     private static readonly ColorData _defaultColor = new(null);
     private static readonly SolidColorBrush _defaultBrush = new(_defaultColor.MColor);
 
-    private ISettings _settings;
+    private readonly ISettings _settings;
     public Action<PixelView> OnPixelClicked { get; set; }
     public bool ColoringDone = false;
 
@@ -42,12 +42,14 @@ public partial class PixelView : ContentView
         set
         {
             _coloringState = value;
-            Body.BorderColor = ColoringState == ColoringStates.Waiting || ColoringState == ColoringStates.Finising
-                ? _settings.AccentColor.MColor
-                : _defaultColor.MColor;
+
+            Body.BorderColor = IsWaitingForInteraction ? _settings.AccentColor.MColor : _defaultColor.MColor;
+            Body.CornerRadius = IsWaitingForInteraction ? 5 : 0;
         }
     }
     private ColoringStates _coloringState;
+
+    public bool IsWaitingForInteraction => ColoringState == ColoringStates.Waiting || ColoringState == ColoringStates.Finising;
 
     public PixelView(ISettings settings)
     {
@@ -67,7 +69,7 @@ public partial class PixelView : ContentView
 
     private void Interacted()
     {
-        if (ColoringState != ColoringStates.Waiting && ColoringState != ColoringStates.Finising)
+        if (!IsWaitingForInteraction)
             return;
 
         OnPixelClicked(this);

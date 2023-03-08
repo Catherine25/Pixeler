@@ -68,6 +68,12 @@
 	</ItemGroup>
 
 	<ItemGroup>
+	  <Compile Update="src\Views\ColoringConfigurationSelectionView.xaml.cs">
+	    <DependentUpon>ColoringConfigurationSelectionView.xaml</DependentUpon>
+	  </Compile>
+	</ItemGroup>
+
+	<ItemGroup>
 	  <MauiXaml Update="DrawAreaView.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>

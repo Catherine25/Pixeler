@@ -1,7 +1,7 @@
-﻿using Pixeler.Models.Colors;
-using Pixeler.Views;
+﻿using Pixeler.Configuration.Coloring;
+using Pixeler.Models.Colors;
 
-namespace Pixeler.Services
+namespace Pixeler.Services.Pixels
 {
     public class MixingResult
     {
@@ -15,17 +15,15 @@ namespace Pixeler.Services
         }
     }
 
-    public static class ColoringFuncService
+    public class ColoringFuncService
     {
-        private static readonly Dictionary<Modes, Func<ColorData, ColorData, ColorData, MixingResult>> ModeToColorerFunc = new()
+        private readonly Dictionary<ColoringConfiguration, Func<ColorData, ColorData, ColorData, MixingResult>> ColorerFuncs = new();
+
+        public ColoringFuncService()
         {
-            {
-                Modes.Direct, Direct_ColorerFunc
-            },
-            {
-                Modes.Layered_Acryllic, LayeredBigToSmallAcryllic_ColorerFunc
-            }
-        };
+            ColorerFuncs.Add(new ColoringConfiguration(PixelGrouping.None, Layoring.Oil), Direct_ColorerFunc);
+            ColorerFuncs.Add(new ColoringConfiguration(PixelGrouping.None, Layoring.Acryllic), DirectAcryllic_ColorerFunc);
+        }
 
         /// <summary>
         /// 1st - Color of the pixel in drawing area.
@@ -33,9 +31,9 @@ namespace Pixeler.Services
         /// 3rd - Color of the pixel in the original image.
         /// </summary>
         /// <returns>The resulting color.</returns>
-        public static Func<ColorData, ColorData, ColorData, MixingResult> GetForMode(Modes modes) => ModeToColorerFunc[modes];
+        public Func<ColorData, ColorData, ColorData, MixingResult> GetForMode(ColoringConfiguration coloringConfiguration) => ColorerFuncs[coloringConfiguration];
 
-        private static MixingResult Direct_ColorerFunc(ColorData extisting, ColorData selected, ColorData original)
+        private MixingResult Direct_ColorerFunc(ColorData extisting, ColorData selected, ColorData original)
         {
             // skip already colored
             if (extisting == original)
@@ -52,7 +50,7 @@ namespace Pixeler.Services
         /// Gets difference of lightness between selected and existing.
         /// If lightness of the selected color is less than lightness of the pixel - returns the selected color.
         /// </summary>
-        private static MixingResult LayeredBigToSmallAcryllic_ColorerFunc(ColorData extisting, ColorData selected, ColorData original)
+        private MixingResult DirectAcryllic_ColorerFunc(ColorData extisting, ColorData selected, ColorData original)
         {
             // skip already colored
             if (extisting == original)
@@ -70,13 +68,13 @@ namespace Pixeler.Services
                 return null;
 
             // skip if the candidate color has different hue
-            if((int)candidateColor.H != (int)original.H)
+            if ((int)candidateColor.H != (int)original.H)
                 return null;
 
             return new MixingResult(candidateColor, original == candidateColor);
         }
 
-        private static ColorData SumColors(ColorData c1, ColorData c2)
+        private ColorData SumColors(ColorData c1, ColorData c2)
         {
             int r = Math.Min(c1.R + c2.R, 255);
             int g = Math.Min(c1.G + c2.G, 255);

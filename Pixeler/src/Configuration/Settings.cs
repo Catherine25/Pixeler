@@ -1,7 +1,7 @@
 using Pixeler.Models.Colors;
 using MColor = Microsoft.Maui.Graphics.Colors;
 
-namespace Pixeler.Models;
+namespace Pixeler.Configuration;
 
 public class Settings : ISettings
 {
@@ -10,6 +10,6 @@ public class Settings : ISettings
     public int PaletteSize => 10;
     public string SoundPath => "demo-2.wav";
     public (int Min, int Max) LevelSizeRange { get => (2, 16); }
-    public int PixelHighlightThickness { get => 1; }
-    public int PixelMargin { get => 1; }
+    public int PixelHighlightThickness { get => 2; }
+    public int PixelMargin { get => 2; }
 }

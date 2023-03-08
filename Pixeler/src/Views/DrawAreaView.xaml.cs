@@ -1,5 +1,5 @@
+using Pixeler.Configuration;
 using Pixeler.ExtendedViews;
-using Pixeler.Models;
 using Pixeler.Models.Colors;
 using Pixeler.Services;
 
@@ -9,7 +9,7 @@ public partial class DrawAreaView : ContentView
 {
     public Action ColorCompleted;
 
-    private ColoringConfiguration _coloringConfiguration;
+    private GameConfiguration _coloringConfiguration;
     private readonly ISettings _settings;
     private Counter _counter;
     private ColorData _pendingColor;
@@ -30,7 +30,7 @@ public partial class DrawAreaView : ContentView
         Content = _typedGrid.Grid;
     }
 
-    public void SetConfiguration(ColoringConfiguration coloringConfiguration)
+    public void SetConfiguration(GameConfiguration coloringConfiguration)
     {
         _coloringConfiguration = coloringConfiguration;
 
@@ -40,9 +40,12 @@ public partial class DrawAreaView : ContentView
         for (int x = 0; x < resolution; x++)
             for (int y = 0; y < resolution; y++)
             {
-                PixelView pixel = new(_settings);
-                pixel.OnPixelClicked += OnPixelClicked;
-                _typedGrid.Add(pixel, x, y);
+                this.TimedDelegate(() =>
+                {
+                    PixelView pixel = new(_settings);
+                    pixel.OnPixelClicked += OnPixelClicked;
+                    _typedGrid.Add(pixel, x, y);
+                }, "SetConfiguration");
             }
     }
 

@@ -1,6 +1,6 @@
 using Pixeler.Models.Colors;
 
-namespace Pixeler.Models;
+namespace Pixeler.Configuration;
 
 public interface ISettings
 {

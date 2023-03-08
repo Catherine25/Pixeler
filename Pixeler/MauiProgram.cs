@@ -1,4 +1,4 @@
-﻿using Pixeler.Models;
+﻿using Pixeler.Configuration;
 using Pixeler.Services;
 using Pixeler.Views;
 using Plugin.Maui.Audio;
@@ -38,7 +38,7 @@ public static class MauiProgram
         builder.Services.AddTransient<DrawAreaView>();
         builder.Services.AddTransient<ImageConfigurationView>();
         builder.Services.AddTransient<LevelSelectionView>();
-        builder.Services.AddTransient<ModeSelectionView>();
+        builder.Services.AddTransient<ColoringConfigurationSelectionView>();
         builder.Services.AddTransient<PaletteView>();
 
         builder.Services.AddTransient<MainPage>();

@@ -1,6 +1,6 @@
-﻿using Pixeler.Extensions;
-using Pixeler.Models;
-using Pixeler.Services;
+﻿using Pixeler.Configuration;
+using Pixeler.Extensions;
+using Pixeler.Services.Coloring;
 using Pixeler.Views;
 
 namespace Pixeler;
@@ -26,7 +26,7 @@ public partial class MainPage : ContentPage
         _paletteView = paletteView;
 
         _drawAreaView.ColorCompleted += _paletteView.CompleteColor;
-		_imageConfigurationView.ColoringConfigurationCompleted += ColoringConfigurationCompleted;
+		_imageConfigurationView.ColoringConfigurationCompleted += GameConfigurationCompleted;
         _paletteView.OnColorDataChosen += _drawAreaView.SetPixelsToColor;
         _paletteView.AreaColorsDone += AreaColorsDone;
 
@@ -34,12 +34,12 @@ public partial class MainPage : ContentPage
 		Body.Add(_paletteView, _paletteViewLocation);
 	}
 
-	private void ColoringConfigurationCompleted(ColoringConfiguration coloringConfiguration)
+	private void GameConfigurationCompleted(GameConfiguration gameConfiguration)
 	{
 		Body.ReplaceChild(_imageConfigurationView, _drawAreaView);
-        _drawAreaView.SetConfiguration(coloringConfiguration);
+        _drawAreaView.SetConfiguration(gameConfiguration);
 
-		var palette = PaletteService.Build(coloringConfiguration);
+		var palette = PaletteService.Build(gameConfiguration);
 		_paletteView.Colors = palette;
     }
 

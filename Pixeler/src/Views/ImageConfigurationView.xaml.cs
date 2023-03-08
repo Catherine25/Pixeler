@@ -1,18 +1,20 @@
+using Pixeler.Configuration;
+using Pixeler.Configuration.Coloring;
 using Pixeler.Extensions;
-using Pixeler.Models;
 using Pixeler.Services;
+using Pixeler.Services.Pixels;
 
 namespace Pixeler.Views;
 
 public partial class ImageConfigurationView : ContentView
 {
-	public Action<ColoringConfiguration> ColoringConfigurationCompleted;
+	public Action<GameConfiguration> ColoringConfigurationCompleted;
 
     private readonly IImageService _imageService;
     private readonly ILocatorService _locatorService;
 	private readonly LevelSelectionView _levelSelectionView;
-	private readonly ModeSelectionView _modeSelectionView;
-    private ColoringConfiguration _coloringConfiguration;
+	private readonly ColoringConfigurationSelectionView _coloringConfigurationSelectionView;
+    private GameConfiguration _gameConfiguration;
     private readonly Point _levelSelectionViewLocation = new(0, 4);
     private readonly Point _modeSelectionViewLocation = new(0, 5);
 
@@ -20,17 +22,17 @@ public partial class ImageConfigurationView : ContentView
 		IImageService imageService,
         ILocatorService locatorService,
         LevelSelectionView levelSelectionView,
-        ModeSelectionView modeSelectionView)
+        ColoringConfigurationSelectionView coloringConfigurationSelectionView)
 	{
 		InitializeComponent();
 
         _imageService = imageService;
         _locatorService = locatorService;
         _levelSelectionView = levelSelectionView;
-        _modeSelectionView = modeSelectionView;
+        _coloringConfigurationSelectionView = coloringConfigurationSelectionView;
 
         _levelSelectionView.LevelSelected += LevelSelectionView_LevelSelected;
-        _modeSelectionView.SelectedModeChanged += ModeSelectionView_SelectedModeChanged;
+        _coloringConfigurationSelectionView.SelectedColoringConfigurationChanged += ColoringConfigurationSelectionView_SelectedColoringConfigurationChanged;
 
         SelectButton.SetClickSound(audioService);
         SelectButton.Clicked += SelectButton_Clicked;
@@ -39,23 +41,23 @@ public partial class ImageConfigurationView : ContentView
         StartButton.Clicked += StartButton_Clicked;
     }
 
-    private void ModeSelectionView_SelectedModeChanged(Modes mode)
+    private void ColoringConfigurationSelectionView_SelectedColoringConfigurationChanged(ColoringConfiguration coloringConfiguration)
     {
-        _coloringConfiguration.Mode = mode;
-        _coloringConfiguration.CalculateColor = ColoringFuncService.GetForMode(mode);
+        _gameConfiguration.ColoringConfiguration = coloringConfiguration;
+        _gameConfiguration.CalculateColor = new ColoringFuncService().GetForMode(coloringConfiguration);
         TryEnableStartButton();
     }
 
     private void LevelSelectionView_LevelSelected(int levelResolution)
 	{
-        _coloringConfiguration.GridResolution = levelResolution;
+        _gameConfiguration.GridResolution = levelResolution;
 
         TryEnableStartButton();
     }
 
     private void TryEnableStartButton()
     {
-        if (_coloringConfiguration.Mode == null || _coloringConfiguration.GridResolution == 0)
+        if (_gameConfiguration.GridResolution == 0)
             return;
 
         StartButton.IsEnabled = true;
@@ -65,21 +67,21 @@ public partial class ImageConfigurationView : ContentView
 	{
         var bitmap = await _imageService.GetBitmapFromStorage();
 
-        _coloringConfiguration = new ColoringConfiguration(bitmap, _locatorService);
+        _gameConfiguration = new GameConfiguration(bitmap, _locatorService);
 
         ImageResolutionLabel.IsVisible = true;
-        var size = _coloringConfiguration.Size;
+        var size = _gameConfiguration.Size;
         ImageResolutionValueLabel.Text = $"{size.Width}x{size.Height}, {size.Width * size.Height} pixels";
 
-		_levelSelectionView.GenerateLevelButtons(_coloringConfiguration.SquaredResolution);
+		_levelSelectionView.GenerateLevelButtons(_gameConfiguration.SquaredResolution);
         Body.Add(_levelSelectionView, _levelSelectionViewLocation);
-        Body.Add(_modeSelectionView, _modeSelectionViewLocation);
+        Body.Add(_coloringConfigurationSelectionView, _modeSelectionViewLocation);
 
         StartButton.IsVisible = true;
     }
 
 	private void StartButton_Clicked(object sender, EventArgs e)
 	{
-		ColoringConfigurationCompleted(_coloringConfiguration);
+		ColoringConfigurationCompleted(_gameConfiguration);
     }
 }

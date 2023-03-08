@@ -1,12 +1,14 @@
-﻿using Pixeler.Models.Colors;
+﻿using Pixeler.Configuration.Coloring;
+using Pixeler.Models;
+using Pixeler.Models.Colors;
 using Pixeler.Services;
-using Pixeler.Views;
+using Pixeler.Services.Pixels;
 
-namespace Pixeler.Models;
+namespace Pixeler.Configuration;
 
-public class ColoringConfiguration
+public class GameConfiguration
 {
-    private Bitmap _bitmap;
+    private readonly Bitmap _bitmap;
 
     public int GridResolution
     {
@@ -28,11 +30,11 @@ public class ColoringConfiguration
     private Size Margin;
     private int Padding;
 
-    public Modes? Mode;
+    public ColoringConfiguration ColoringConfiguration;
     public Func<ColorData, ColorData, ColorData, MixingResult> CalculateColor { get; internal set; }
-    private ILocatorService _locatorService;
+    private readonly ILocatorService _locatorService;
 
-    public ColoringConfiguration(Bitmap bitmap, ILocatorService locatorService)
+    public GameConfiguration(Bitmap bitmap, ILocatorService locatorService)
     {
         _bitmap = bitmap;
         _locatorService = locatorService;
