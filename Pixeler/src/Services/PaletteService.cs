@@ -23,7 +23,7 @@ public static class PaletteService
         int gridResolution = coloringConfiguration.GridResolution;
 
         for (int x = 0; x < gridResolution; x++)
-            for (int y = 0; y < coloringConfiguration.GridResolution; y++)
+            for (int y = 0; y < gridResolution; y++)
             {
                 var pixel = coloringConfiguration.GetPixel(x, y);
                 palette.Add(pixel);
@@ -38,7 +38,7 @@ public static class PaletteService
         int gridResolution = coloringConfiguration.GridResolution;
 
         for (int x = 0; x < gridResolution; x++)
-            for (int y = 0; y < coloringConfiguration.GridResolution; y++)
+            for (int y = 0; y < gridResolution; y++)
             {
                 var pixel = coloringConfiguration.GetPixel(x, y);
                 palette.Add(pixel);
