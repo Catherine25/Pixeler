@@ -80,8 +80,8 @@ public partial class PaletteView : ContentView
         // coloring finished
         if (_gridView.Empty)
             AreaColorsDone();
-        
-        SelectPaletteItem(_gridView.Children.First());
+        else
+            SelectPaletteItem(_gridView.Children.First());
     }
 
     private void Rect_Clicked(PaletteItemView paletteItem)

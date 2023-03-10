@@ -45,6 +45,6 @@ public partial class MainPage : ContentPage
 
 	private void AreaColorsDone()
 	{
-		throw new NotImplementedException();
+        DisplayAlert("Congratulations", "You have finished the drawing!", "OK");
 	}
 }
