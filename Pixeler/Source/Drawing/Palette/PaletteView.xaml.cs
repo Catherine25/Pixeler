@@ -1,5 +1,4 @@
 using Pixeler.Source.Colors;
-using Pixeler.Source.Configuration;
 using Pixeler.Source.ExtendedViews;
 using Pixeler.Source.Services;
 

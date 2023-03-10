@@ -1,7 +1,7 @@
 ﻿using Pixeler.Source.Colors;
 using SkiaSharp;
 
-namespace Pixeler.Source.Images;
+namespace Pixeler.Source.Configuration.Images;
 
 public class Bitmap
 {

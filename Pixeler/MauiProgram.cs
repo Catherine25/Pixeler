@@ -1,5 +1,5 @@
 ﻿using Pixeler.Source.Configuration;
-using Pixeler.Source.Images;
+using Pixeler.Source.Configuration.Images;
 using Pixeler.Source.Services;
 using Pixeler.Source.Views;
 using Plugin.Maui.Audio;

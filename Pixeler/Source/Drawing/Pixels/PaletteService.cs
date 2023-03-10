@@ -2,7 +2,7 @@
 using Pixeler.Source.Configuration;
 using Pixeler.Source.Configuration.Coloring;
 
-namespace Pixeler.Source.Services.Pixels;
+namespace Pixeler.Source.Drawing.Pixels;
 
 public class PaletteService
 {

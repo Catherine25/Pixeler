@@ -1,6 +1,6 @@
 using Pixeler.Source.Configuration;
+using Pixeler.Source.Drawing.Pixels;
 using Pixeler.Source.Extensions;
-using Pixeler.Source.Services.Pixels;
 
 namespace Pixeler.Source.Views;
 

@@ -1,6 +1,6 @@
 ﻿using Pixeler.Source.Colors;
 
-namespace Pixeler.Source.Images;
+namespace Pixeler.Source.Configuration.Images;
 
 public class ColorMatrix
 {

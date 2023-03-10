@@ -1,6 +1,6 @@
 ﻿using SkiaSharp;
 
-namespace Pixeler.Source.Images;
+namespace Pixeler.Source.Configuration.Images;
 
 /// <summary>
 /// Service for loading <see cref="Bitmap"/> from the storage.

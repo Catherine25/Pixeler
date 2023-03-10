@@ -1,7 +1,7 @@
 using Pixeler.Source.Colors;
 using MColor = Microsoft.Maui.Graphics.Colors;
 
-namespace Pixeler.Source.Configuration;
+namespace Pixeler.Source;
 
 public class Settings : ISettings
 {

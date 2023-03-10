@@ -1,9 +1,9 @@
 using Pixeler.Source.Configuration;
 using Pixeler.Source.Configuration.Coloring;
+using Pixeler.Source.Configuration.Images;
+using Pixeler.Source.Drawing.Pixels;
 using Pixeler.Source.Extensions;
-using Pixeler.Source.Images;
 using Pixeler.Source.Services;
-using Pixeler.Source.Services.Pixels;
 
 namespace Pixeler.Source.Views;
 

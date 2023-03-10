@@ -1,4 +1,4 @@
-﻿namespace Pixeler.Source.Services;
+﻿namespace Pixeler.Source.Drawing.Pixels;
 
 public class Counter
 {

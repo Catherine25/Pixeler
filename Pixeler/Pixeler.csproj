@@ -68,10 +68,10 @@
 	</ItemGroup>
 
 	<ItemGroup>
-	  <Compile Update="Source\Views\ColoringConfigurationSelectionView.xaml.cs">
+	  <Compile Update="Source\Configuration\ColoringConfigurationSelectionView.xaml.cs">
 	    <DependentUpon>ColoringConfigurationSelectionView.xaml</DependentUpon>
 	  </Compile>
-	  <Compile Update="Source\Views\ImageConfigurationPage.xaml.cs">
+	  <Compile Update="Source\ImageConfiguration\ImageConfigurationPage.xaml.cs">
 	    <DependentUpon>ImageConfigurationPage.xaml</DependentUpon>
 	  </Compile>
 	</ItemGroup>
@@ -89,10 +89,13 @@
 	  <MauiXaml Update="PixelView.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
-	  <MauiXaml Update="Source\Views\DrawingPage.xaml">
+	  <MauiXaml Update="Source\Drawing\DrawingPage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
-	  <MauiXaml Update="Source\Views\ImageConfigurationPage.xaml">
+	  <MauiXaml Update="Source\ImageConfiguration\ImageConfigurationPage.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="Source\Drawing\DrawingPage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	  <MauiXaml Update="Views\ImageConfigurationView.xaml">
