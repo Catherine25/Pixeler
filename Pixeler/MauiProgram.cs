@@ -45,6 +45,7 @@ public static class MauiProgram
 
     private static void RegisterPages(MauiAppBuilder builder)
     {
+        builder.Services.AddTransient<DrawingPage>();
         builder.Services.AddTransient<ImageConfigurationPage>();
         builder.Services.AddTransient<MainPage>();
     }

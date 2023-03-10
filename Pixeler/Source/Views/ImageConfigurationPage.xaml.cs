@@ -84,6 +84,5 @@ public partial class ImageConfigurationPage : ContentPage
     private void StartButton_Clicked(object sender, EventArgs e)
     {
         ColoringConfigurationCompleted(_gameConfiguration);
-        Navigation.PopAsync();
     }
 }
