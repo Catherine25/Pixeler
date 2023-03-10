@@ -1,6 +1,7 @@
-﻿using Pixeler.Configuration;
-using Pixeler.Services;
-using Pixeler.Views;
+﻿using Pixeler.Source.Configuration;
+using Pixeler.Source.Images;
+using Pixeler.Source.Services;
+using Pixeler.Source.Views;
 using Plugin.Maui.Audio;
 
 namespace Pixeler;
@@ -29,7 +30,7 @@ public static class MauiProgram
         builder.Services.AddSingleton(AudioManager.Current);
         builder.Services.AddScoped<ISettings, Settings>();
         builder.Services.AddScoped<IAudioService, AudioService>();
-        builder.Services.AddScoped<IImageService, ImageService>();
+        builder.Services.AddScoped<ILoaderService, BitmapLoadingService>();
         builder.Services.AddScoped<ILocatorService, LocatorService>();
     }
 

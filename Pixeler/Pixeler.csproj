@@ -68,7 +68,7 @@
 	</ItemGroup>
 
 	<ItemGroup>
-	  <Compile Update="src\Views\ColoringConfigurationSelectionView.xaml.cs">
+	  <Compile Update="Source\Views\ColoringConfigurationSelectionView.xaml.cs">
 	    <DependentUpon>ColoringConfigurationSelectionView.xaml</DependentUpon>
 	  </Compile>
 	</ItemGroup>
