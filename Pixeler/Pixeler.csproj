@@ -71,6 +71,9 @@
 	  <Compile Update="Source\Views\ColoringConfigurationSelectionView.xaml.cs">
 	    <DependentUpon>ColoringConfigurationSelectionView.xaml</DependentUpon>
 	  </Compile>
+	  <Compile Update="Source\Views\ImageConfigurationPage.xaml.cs">
+	    <DependentUpon>ImageConfigurationPage.xaml</DependentUpon>
+	  </Compile>
 	</ItemGroup>
 
 	<ItemGroup>
@@ -84,6 +87,9 @@
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	  <MauiXaml Update="PixelView.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="Source\Views\ImageConfigurationPage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	  <MauiXaml Update="Views\ImageConfigurationView.xaml">

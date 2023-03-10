@@ -7,25 +7,25 @@ using Pixeler.Source.Services.Pixels;
 
 namespace Pixeler.Source.Views;
 
-public partial class ImageConfigurationView : ContentView
+public partial class ImageConfigurationPage : ContentPage
 {
-	public Action<GameConfiguration> ColoringConfigurationCompleted;
+    public Action<GameConfiguration> ColoringConfigurationCompleted;
 
     private readonly ILoaderService _imageService;
     private readonly ILocatorService _locatorService;
-	private readonly LevelSelectionView _levelSelectionView;
-	private readonly ColoringConfigurationSelectionView _coloringConfigurationSelectionView;
+    private readonly LevelSelectionView _levelSelectionView;
+    private readonly ColoringConfigurationSelectionView _coloringConfigurationSelectionView;
     private GameConfiguration _gameConfiguration;
     private readonly Point _levelSelectionViewLocation = new(0, 4);
     private readonly Point _modeSelectionViewLocation = new(0, 5);
 
-    public ImageConfigurationView(IAudioService audioService,
-		ILoaderService imageService,
+    public ImageConfigurationPage(IAudioService audioService,
+        ILoaderService imageService,
         ILocatorService locatorService,
         LevelSelectionView levelSelectionView,
         ColoringConfigurationSelectionView coloringConfigurationSelectionView)
 	{
-		InitializeComponent();
+        InitializeComponent();
 
         _imageService = imageService;
         _locatorService = locatorService;
@@ -50,7 +50,7 @@ public partial class ImageConfigurationView : ContentView
     }
 
     private void LevelSelectionView_LevelSelected(int levelResolution)
-	{
+    {
         _gameConfiguration.GridResolution = levelResolution;
 
         TryEnableStartButton();
@@ -65,7 +65,7 @@ public partial class ImageConfigurationView : ContentView
     }
 
     private async void SelectButton_Clicked(object sender, EventArgs e)
-	{
+    {
         var bitmap = await _imageService.LoadBitmapFromStorage();
 
         _gameConfiguration = new GameConfiguration(bitmap, _locatorService);
@@ -74,15 +74,16 @@ public partial class ImageConfigurationView : ContentView
         var size = _gameConfiguration.Size;
         ImageResolutionValueLabel.Text = $"{size.Width}x{size.Height}, {size.Width * size.Height} pixels";
 
-		_levelSelectionView.GenerateLevelButtons(_gameConfiguration.SquaredResolution);
+        _levelSelectionView.GenerateLevelButtons(_gameConfiguration.SquaredResolution);
         Body.Add(_levelSelectionView, _levelSelectionViewLocation);
         Body.Add(_coloringConfigurationSelectionView, _modeSelectionViewLocation);
 
         StartButton.IsVisible = true;
     }
 
-	private void StartButton_Clicked(object sender, EventArgs e)
-	{
-		ColoringConfigurationCompleted(_gameConfiguration);
+    private void StartButton_Clicked(object sender, EventArgs e)
+    {
+        ColoringConfigurationCompleted(_gameConfiguration);
+        Navigation.PopAsync();
     }
 }

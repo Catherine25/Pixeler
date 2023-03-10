@@ -21,8 +21,9 @@ public static class MauiProgram
 
 		RegisterServices(builder);
         RegisterViews(builder);
+        RegisterPages(builder);
 
-		return builder.Build();
+        return builder.Build();
 	}
 
 	private static void RegisterServices(MauiAppBuilder builder)
@@ -37,11 +38,14 @@ public static class MauiProgram
     private static void RegisterViews(MauiAppBuilder builder)
     {
         builder.Services.AddTransient<DrawAreaView>();
-        builder.Services.AddTransient<ImageConfigurationView>();
         builder.Services.AddTransient<LevelSelectionView>();
         builder.Services.AddTransient<ColoringConfigurationSelectionView>();
         builder.Services.AddTransient<PaletteView>();
+    }
 
+    private static void RegisterPages(MauiAppBuilder builder)
+    {
+        builder.Services.AddTransient<ImageConfigurationPage>();
         builder.Services.AddTransient<MainPage>();
     }
 }
