@@ -1,4 +1,4 @@
-﻿using Pixeler.Source.Configuration;
+﻿using Pixeler.Source;
 using Pixeler.Source.Configuration.Images;
 using Pixeler.Source.Services;
 using Pixeler.Source.Views;

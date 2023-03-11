@@ -1,4 +1,5 @@
 using Pixeler.Source.Configuration.Coloring;
+using Pixeler.Source.Drawing.Pixels;
 using Pixeler.Source.ExtendedViews;
 using Pixeler.Source.Extensions;
 using Pixeler.Source.Services;
@@ -41,6 +42,9 @@ public partial class ColoringConfigurationSelectionView : ContentView
             item.Enabled = true;
 
         button.Enabled = false;
+
+        // todo refactor
+        configuration.CalculateColor = new ColoringFuncService().GetForMode(configuration);
 
         SelectedColoringConfigurationChanged(configuration);
     }

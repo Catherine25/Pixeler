@@ -10,7 +10,7 @@ public partial class DrawAreaView : ContentView
 {
     public Action ColorCompleted;
 
-    private GameConfiguration _coloringConfiguration;
+    private GameConfiguration _gameConfiguration;
     private readonly ISettings _settings;
     private Counter _counter;
     private ColorData _pendingColor;
@@ -31,11 +31,11 @@ public partial class DrawAreaView : ContentView
         Content = _typedGrid.Grid;
     }
 
-    public void SetConfiguration(GameConfiguration coloringConfiguration)
+    public void SetConfiguration(GameConfiguration gameConfiguration)
     {
-        _coloringConfiguration = coloringConfiguration;
+        _gameConfiguration = gameConfiguration;
 
-        int resolution = coloringConfiguration.GridResolution;
+        int resolution = _gameConfiguration.ColorMatrix.GridResolution;
         _typedGrid.Size = new Size(resolution);
 
         for (int x = 0; x < resolution; x++)
@@ -64,10 +64,10 @@ public partial class DrawAreaView : ContentView
                 continue;
 
             var existingColor = existingPixelView.Color;
-            var originalColor = _coloringConfiguration.GetPixel(existingPixelView.Location);
+            var originalColor = _gameConfiguration.ColorMatrix.GetPixel(existingPixelView.Location);
 
             // calculate color
-            var newColor = _coloringConfiguration.CalculateColor(existingColor, _pendingColor, originalColor);
+            var newColor = _gameConfiguration.ColoringConfiguration.CalculateColor(existingColor, _pendingColor, originalColor);
 
             // if the color was not calculated - skip
             // it means that existing and selected colors will not result the needed color

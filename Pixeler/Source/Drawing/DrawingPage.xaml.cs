@@ -25,7 +25,7 @@ public partial class DrawingPage : ContentPage
         Body.Add(_paletteView, _paletteViewLocation);
     }
 
-    public void SetGameConfiguration(GameConfiguration gameConfiguration)
+    public void SetConfiguration(GameConfiguration gameConfiguration)
     {
         Body.Add(_drawAreaView);
         _drawAreaView.SetConfiguration(gameConfiguration);

@@ -16,15 +16,15 @@ public partial class MainPage : ContentPage
         _drawingPage = drawingPage;
         _imageConfigurationPage = imageConfigurationPage;
 
-        _imageConfigurationPage.ColoringConfigurationCompleted += GameConfigurationCompleted;
+        _imageConfigurationPage.ConfigurationCompleted += ConfigurationCompleted;
 
 		Navigation.PushAsync(_imageConfigurationPage);
-	}
+    }
 
-    private void GameConfigurationCompleted(GameConfiguration gameConfiguration)
+    private void ConfigurationCompleted(GameConfiguration gameConfiguration)
     {
-        Navigation.PopAsync();
-        _drawingPage.SetGameConfiguration(gameConfiguration);
+        _drawingPage.SetConfiguration(gameConfiguration);
+
         Navigation.PushAsync(_drawingPage);
     }
 }

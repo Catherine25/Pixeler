@@ -1,4 +1,3 @@
-using Pixeler.Source.Configuration;
 using Plugin.Maui.Audio;
 
 namespace Pixeler.Source.Services;

@@ -1,4 +1,3 @@
-using Pixeler.Source.Configuration;
 using Pixeler.Source.ExtendedViews;
 using Pixeler.Source.Extensions;
 using Pixeler.Source.Services;
