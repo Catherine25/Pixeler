@@ -1,5 +1,6 @@
 ﻿using Pixeler.Source;
 using Pixeler.Source.Configuration.Images;
+using Pixeler.Source.Drawing.Pixels;
 using Pixeler.Source.Services;
 using Pixeler.Source.Views;
 using Plugin.Maui.Audio;
@@ -33,6 +34,7 @@ public static class MauiProgram
         builder.Services.AddScoped<IAudioService, AudioService>();
         builder.Services.AddScoped<ILoaderService, BitmapLoadingService>();
         builder.Services.AddScoped<ILocatorService, LocatorService>();
+        builder.Services.AddScoped<IColoringFuncService, ColoringFuncService>();
     }
 
     private static void RegisterViews(MauiAppBuilder builder)

@@ -14,14 +14,14 @@ public class MixingResult
     }
 }
 
-public class ColoringFuncService
+public class ColoringFuncService : IColoringFuncService
 {
     private readonly Dictionary<ColoringConfiguration, Func<ColorData, ColorData, ColorData, MixingResult>> ColorerFuncs = new();
 
     public ColoringFuncService()
     {
-        ColorerFuncs.Add(new ColoringConfiguration(PixelGrouping.None, Layoring.Oil), Direct_ColorerFunc);
-        ColorerFuncs.Add(new ColoringConfiguration(PixelGrouping.None, Layoring.Acryllic), DirectAcryllic_ColorerFunc);
+        ColorerFuncs.Add(new(PixelGrouping.None, Layoring.Oil), Direct_ColorerFunc);
+        ColorerFuncs.Add(new(PixelGrouping.None, Layoring.Acryllic), DirectAcryllic_ColorerFunc);
     }
 
     /// <summary>

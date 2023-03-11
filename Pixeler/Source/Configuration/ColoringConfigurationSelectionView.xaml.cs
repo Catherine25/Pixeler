@@ -11,11 +11,13 @@ public partial class ColoringConfigurationSelectionView : ContentView
     public event Action<ColoringConfiguration> SelectedColoringConfigurationChanged;
 
 	private readonly IAudioService _audioService;
+	private readonly IColoringFuncService _coloringFuncService;
 	private readonly AutoExtendableTypedGrid<ToggleButton> _modesGrid;
 
-    public ColoringConfigurationSelectionView(IAudioService audioService)
+    public ColoringConfigurationSelectionView(IAudioService audioService, IColoringFuncService coloringFuncService)
 	{
 		_audioService = audioService;
+        _coloringFuncService = coloringFuncService;
 
 		InitializeComponent();
 
@@ -43,8 +45,7 @@ public partial class ColoringConfigurationSelectionView : ContentView
 
         button.Enabled = false;
 
-        // todo refactor
-        configuration.CalculateColor = new ColoringFuncService().GetForMode(configuration);
+        configuration.CalculateColor = _coloringFuncService.GetForMode(configuration);
 
         SelectedColoringConfigurationChanged(configuration);
     }

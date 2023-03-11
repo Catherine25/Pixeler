@@ -14,7 +14,10 @@ public class ColorMatrix
 
         for (int x = 0; x < _bitmapConfiguration.GridResolution; x++)
             for (int y = 0; y < _bitmapConfiguration.GridResolution; y++)
-                _data.Add(new Point(x, y), _bitmapConfiguration.GetPixel(x, y));
+            {
+                var point = new Point(x, y);
+                _data.Add(point, _bitmapConfiguration.GetPixel(point));
+            }
     }
 
     public ColorData GetPixel(Point point) => _data[point];
