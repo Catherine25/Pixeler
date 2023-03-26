@@ -30,25 +30,25 @@ public static class MauiProgram
 	private static void RegisterServices(MauiAppBuilder builder)
 	{
         builder.Services.AddSingleton(AudioManager.Current);
-        builder.Services.AddScoped<ISettings, Settings>();
-        builder.Services.AddScoped<IAudioService, AudioService>();
-        builder.Services.AddScoped<ILoaderService, BitmapLoadingService>();
-        builder.Services.AddScoped<ILocatorService, LocatorService>();
-        builder.Services.AddScoped<IColoringFuncService, ColoringFuncService>();
+        builder.Services.AddSingleton<ISettings, Settings>();
+        builder.Services.AddSingleton<IAudioService, AudioService>();
+        builder.Services.AddSingleton<ILoaderService, BitmapLoadingService>();
+        builder.Services.AddSingleton<ILocatorService, LocatorService>();
+        builder.Services.AddSingleton<IColoringFuncService, ColoringFuncService>();
     }
 
     private static void RegisterViews(MauiAppBuilder builder)
     {
-        builder.Services.AddTransient<DrawAreaView>();
-        builder.Services.AddTransient<LevelSelectionView>();
-        builder.Services.AddTransient<ColoringConfigurationSelectionView>();
-        builder.Services.AddTransient<PaletteView>();
+        builder.Services.AddSingleton<DrawAreaView>();
+        builder.Services.AddSingleton<LevelSelectionView>();
+        builder.Services.AddSingleton<ColoringConfigurationSelectionView>();
+        builder.Services.AddSingleton<PaletteView>();
     }
 
     private static void RegisterPages(MauiAppBuilder builder)
     {
-        builder.Services.AddTransient<DrawingPage>();
-        builder.Services.AddTransient<ImageConfigurationPage>();
-        builder.Services.AddTransient<MainPage>();
+        builder.Services.AddSingleton<DrawingPage>();
+        builder.Services.AddSingleton<ImageConfigurationPage>();
+        builder.Services.AddSingleton<MainPage>();
     }
 }
