@@ -1,9 +1,10 @@
-﻿namespace Pixeler;
-
-public partial class AppShell : Shell
+﻿namespace Pixeler
 {
-    public AppShell()
+    public partial class AppShell : Shell
     {
-        InitializeComponent();
+        public AppShell()
+        {
+            InitializeComponent();
+        }
     }
 }

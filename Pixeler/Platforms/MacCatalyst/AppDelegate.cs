@@ -1,9 +1,10 @@
 ﻿using Foundation;
 
-namespace Pixeler;
-
-[Register("AppDelegate")]
-public class AppDelegate : MauiUIApplicationDelegate
+namespace Pixeler
 {
-    protected override MauiApp CreateMauiApp() => MauiProgram.CreateMauiApp();
+    [Register("AppDelegate")]
+    public class AppDelegate : MauiUIApplicationDelegate
+    {
+        protected override MauiApp CreateMauiApp() => MauiProgram.CreateMauiApp();
+    }
 }
