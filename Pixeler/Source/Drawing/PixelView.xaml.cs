@@ -2,14 +2,6 @@ using Pixeler.Source.Colors;
 
 namespace Pixeler.Source.Views;
 
-public enum ColoringStates
-{
-    Passive,
-    Waiting,
-    Finising,
-    Done,
-}
-
 public partial class PixelView : ContentView
 {
     private static readonly ColorData _defaultColor = new(null);
