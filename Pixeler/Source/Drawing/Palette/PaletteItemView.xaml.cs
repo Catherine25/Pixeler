@@ -29,6 +29,17 @@ public partial class PaletteItemView : ContentView
     }
     private bool _selected;
 
+    public int Index
+    {
+        get => _index;
+        set
+        {
+            _index = value;
+            Body.Text = (_index + 1).ToString();
+        }
+    }
+    private int _index;
+
     public PaletteItemView(ISettings settings)
     {
         InitializeComponent();

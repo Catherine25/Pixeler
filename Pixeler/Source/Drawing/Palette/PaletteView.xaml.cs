@@ -55,7 +55,8 @@ public partial class PaletteView : ContentView
 
             var rect = new PaletteItemView(_settings)
             {
-                Color = item
+                Color = item,
+                Index = i,
             };
 
             rect.Clicked += Rect_Clicked;
@@ -95,7 +96,7 @@ public partial class PaletteView : ContentView
 
     private void DeselectPreviouslySelected()
     {
-        PaletteItemView selected = _gridView.Children.SingleOrDefault(x => x.Selected);
+        var selected = _gridView.Children.SingleOrDefault(x => x.Selected);
 
         if (selected != null)
             selected.Selected = false;

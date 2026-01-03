@@ -61,6 +61,9 @@ public partial class PixelView : ContentView
         Body.BorderWidth = _settings.PixelHighlightThickness;
         Body.Margin = _settings.PixelMargin;
 
+        Body.Text = "x";
+        Body.TextColor = _settings.AccentColor.MColor;
+
         // old way of handling
         // Body.Clicked += (_, _) => Interacted();
         GraphicsView.StartHoverInteraction += (_, _) => Interacted();
@@ -74,6 +77,7 @@ public partial class PixelView : ContentView
         OnPixelClicked(this);
         Body.CornerRadius = 0;
         Body.Margin = 0;
+        Body.Text = string.Empty;
 
         ColoringState = ColoringState == ColoringStates.Finising
             ? ColoringState = ColoringStates.Done
