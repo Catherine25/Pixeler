@@ -41,7 +41,7 @@ public partial class DrawAreaView : ContentView
         for (int x = 0; x < resolution; x++)
             for (int y = 0; y < resolution; y++)
             {
-                PixelView pixel = new(_settings);
+                var pixel = new PixelView(_settings);
                 pixel.OnPixelClicked += OnPixelClicked;
                 _typedGrid.Add(pixel, x, y);
             }

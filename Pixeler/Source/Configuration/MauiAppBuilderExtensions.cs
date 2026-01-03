@@ -1,4 +1,3 @@
-using Pixeler.Source;
 using Pixeler.Source.Configuration.Images;
 using Pixeler.Source.Drawing.Pixels;
 using Pixeler.Source.Services;
